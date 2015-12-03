@@ -22,7 +22,7 @@ public class CitiGameActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "12345Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "1Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
