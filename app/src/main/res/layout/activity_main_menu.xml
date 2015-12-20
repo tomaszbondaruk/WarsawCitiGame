@@ -16,7 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Stwórz nową grę"
-        android:id="@+id/button_new_game" />
+        android:id="@+id/button_new_game"
+        android:alpha="0.5"
+        android:visibility="visible"
+        android:background="#2935bb"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="match_parent"
