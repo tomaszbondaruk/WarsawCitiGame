@@ -1,0 +1,26 @@
+jak plik jest pusty to tak ma byc :) nie ma danych w api
+
+
+aby pobrac zawartosc api
+POI Transport
+1939 maps
+mapy historyczne
+
+
+potrzebuje danych takich jak punkt w ktorym bedzie srodek mapy, poziom zblizenia oraz rozdzielczosc
+w formie
+latitude
+longitude
+zoom
+resolution (np 800x600)
+
+
+
+wynik bedzie w jpg jak cos podaje dane do logowania do api jakbysie ktos chcial sam pobawic
+
+
+user siewrgr
+passw pPz9Rz85
+
+
+strony z dokumentacjami :   http://bihapi.pl/for-developers/
