@@ -1,4 +1,4 @@
-package pl.orangeapi.warsawcitigame.db.pojo;
+package pl.orangeapi.warsawcitygame.db.pojo;
 
 /**
  * Created by Grzegorz on 2015-12-30.

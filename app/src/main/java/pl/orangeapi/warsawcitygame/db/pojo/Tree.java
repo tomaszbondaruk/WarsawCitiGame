@@ -1,4 +1,4 @@
-package pl.orangeapi.warsawcitigame.db.pojo;
+package pl.orangeapi.warsawcitygame.db.pojo;
 
 /**
  * Created by Grzegorz on 2015-12-30.
@@ -11,6 +11,15 @@ public class Tree {
     private String street;
     private String streetNumber;
     private String district;
+    private String treeClass;
+
+    public String getTreeClass() {
+        return treeClass;
+    }
+
+    public void setTreeClass(String treeClass) {
+        this.treeClass = treeClass;
+    }
 
     public int get_id() {
         return _id;

@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.AnimationSet;
 import android.widget.Button;
-import android.os.Handler;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -20,6 +19,8 @@ public class MainMenuActivity extends AppCompatActivity {
     AnimationSet set;
 
     Runnable b1anim, b2anim, b3anim, b4anim;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
