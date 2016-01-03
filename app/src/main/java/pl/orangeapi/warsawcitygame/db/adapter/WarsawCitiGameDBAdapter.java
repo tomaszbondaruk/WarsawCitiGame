@@ -135,19 +135,19 @@ public class WarsawCitiGameDBAdapter {
             do {
                 try {
                     Tree tree = new Tree();
-                    tree.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
-                    tree.setDistrict(cursor.getString(cursor.getColumnIndex("district")));
-                    tree.setLatitude(cursor.getDouble(cursor.getColumnIndex("latutude")));
-                    tree.setLongitude(cursor.getDouble(cursor.getColumnIndex("longitude")));
-                    tree.setName(cursor.getString(cursor.getColumnIndex("name")));
-                    tree.setStreet(cursor.getString(cursor.getColumnIndex("street")));
-                    tree.setStreetNumber(cursor.getString(cursor.getColumnIndex("streetNumber")));
-                    tree.setTreeClass(cursor.getString(cursor.getColumnIndex("class")));
+                    tree.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    tree.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    tree.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    tree.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    tree.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                    tree.setStreet(cursor.getString(cursor.getColumnIndex(COLUMN_STREET)));
+                    tree.setStreetNumber(cursor.getString(cursor.getColumnIndex(COLUMN_STREET_NUMBER)));
+                    tree.setTreeClass(cursor.getString(cursor.getColumnIndex(COLUMN_CLASS)));
                     trees.add(tree);
                 }
                 catch (Exception e){
 
-                    Log.i("adapter","no i jeblo "+e.toString());
+                    Log.i("tree","no i jeblo "+e.toString());
                 }
             } while (cursor.moveToNext());
         }
@@ -180,6 +180,35 @@ public class WarsawCitiGameDBAdapter {
         ps.execute();
 
     }
+    public List<Shrub> getAllShrubs(){
+
+        List<Shrub> shrubs = new ArrayList<>();
+        String query  ="SELECT * FROM shrub";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Shrub shrub = new Shrub();
+                    shrub.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    shrub.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    shrub.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    shrub.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    shrub.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                    shrub.setStreet(cursor.getString(cursor.getColumnIndex(COLUMN_STREET)));
+                    shrub.setStreetNumber(cursor.getString(cursor.getColumnIndex(COLUMN_STREET_NUMBER)));
+                    shrub.setShrubClass(cursor.getString(cursor.getColumnIndex(COLUMN_CLASS)));
+                    shrubs.add(shrub);
+                }
+                catch (Exception e){
+
+                    Log.i("shrub","no i jeblo "+e.toString());
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return shrubs;
+    }
+
     public void addProperty(Property property) {
         SQLiteStatement ps = db.compileStatement("insert into property (latitude, longitude, street, streetNumber, district, floorCount,propertyFunction, buildYear) values (0.0,0.0,?,?,?,?,?,?)");
         ps.bindString(1, property.getStreet());
@@ -189,6 +218,35 @@ public class WarsawCitiGameDBAdapter {
         ps.bindString(5, property.getPropertyFunction());
         ps.bindString(6, property.getBuildYear());
         ps.execute();
+    }
+    public List<Property> getAllProperties(){
+
+        List<Property> properties = new ArrayList<>();
+        String query  ="SELECT * FROM property";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Property property = new Property();
+                    property.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    property.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    property.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    property.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    property.setFloorCount(cursor.getString(cursor.getColumnIndex(COLUMN_FLOOR_COUNT)));
+                    property.setStreet(cursor.getString(cursor.getColumnIndex(COLUMN_STREET)));
+                    property.setStreetNumber(cursor.getString(cursor.getColumnIndex(COLUMN_STREET_NUMBER)));
+                    property.setPropertyFunction(cursor.getString(cursor.getColumnIndex(COLUMN_FUNCTION)));
+                    property.setBuildYear(cursor.getString(cursor.getColumnIndex(COLUMN_BUILD_YEAR)));
+                    properties.add(property);
+                }
+                catch (Exception e){
+
+                    Log.i("shrub","no i jeblo "+e.toString());
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return properties;
     }
 
     public void addSquare(Square square) {
@@ -200,6 +258,33 @@ public class WarsawCitiGameDBAdapter {
         ps.bindString(5, square.getAreaName());
         ps.execute();
     }
+    public List<Square> getAllSquares(){
+
+        List<Square> squares = new ArrayList<>();
+        String query  ="SELECT * FROM square";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Square square = new Square();
+                    square.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    square.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    square.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    square.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    square.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                    square.setAreaName(cursor.getString(cursor.getColumnIndex(COLUMN_AREA_NAME)));
+                    squares.add(square);
+                }
+                catch (Exception e){
+
+                    Log.i("shrub","no i jeblo "+e.toString());
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return squares;
+    }
+
     public void addStreet(Street street) {
         SQLiteStatement ps = db.compileStatement("insert into street (latitude, longitude, district, name) values (?,?,?,?)");
         ps.bindDouble(1, street.getLatitude());
@@ -208,6 +293,33 @@ public class WarsawCitiGameDBAdapter {
         ps.bindString(4, street.getName());
         ps.execute();
     }
+
+    public List<Street> getAllStreets(){
+
+        List<Street> streets = new ArrayList<>();
+        String query  ="SELECT * FROM street";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    Street street = new Street();
+                    street.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    street.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    street.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    street.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    street.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                    streets.add(street);
+                }
+                catch (Exception e){
+
+                    Log.i("shrub","no i jeblo "+e.toString());
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return streets;
+    }
+
     public void addForest(Forest forest) {
         SQLiteStatement ps = db.compileStatement("insert into forest (latitude, longitude, name, type, district, surface, areaName) values (?,?,?,?,?,?,?)");
         ps.bindDouble(1, forest.getLatitude());
@@ -219,8 +331,46 @@ public class WarsawCitiGameDBAdapter {
         ps.bindString(7, forest.getArea());
         ps.execute();
     }
+
+    public List<Forest> getAllForests(){
+
+        List<Forest> forests = new ArrayList<>();
+        String query  ="SELECT * FROM forest";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+
+                    Forest forest = new Forest();
+                    forest.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                    forest.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                    forest.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                    forest.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                    forest.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                    forest.setType(cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)));
+                    forest.setSurface(cursor.getString(cursor.getColumnIndex(COLUMN_SURFACE)));
+                    forest.setArea(cursor.getString(cursor.getColumnIndex(COLUMN_AREA_NAME)));
+                    forests.add(forest);
+                }
+                catch (Exception e){
+
+                    Log.i("shrub","no i jeblo "+e.toString());
+                }
+            } while (cursor.moveToNext());
+        }
+
+        return forests;
+    }
     public int treesCount(){
         String q = "select count(*) as total from tree";
+        Cursor mCount= db.rawQuery(q, null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+    public int shrubCount(){
+        String q = "select count(*) as total from shrub";
         Cursor mCount= db.rawQuery(q, null);
         mCount.moveToFirst();
         int count= mCount.getInt(0);

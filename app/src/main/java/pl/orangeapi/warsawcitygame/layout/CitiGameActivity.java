@@ -15,9 +15,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 import pl.orangeapi.warsawcitigame.R;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
+import pl.orangeapi.warsawcitygame.db.pojo.Forest;
+import pl.orangeapi.warsawcitygame.db.pojo.Property;
+import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
+import pl.orangeapi.warsawcitygame.db.pojo.Square;
+import pl.orangeapi.warsawcitygame.db.pojo.Street;
+import pl.orangeapi.warsawcitygame.db.pojo.Tree;
 import pl.orangeapi.warsawcitygame.db.processor.DbPopulateAsyncTask;
 import pl.orangeapi.warsawcitygame.db.processor.WarsawCitiGameDBProcessor;
 
@@ -36,9 +43,12 @@ public class CitiGameActivity extends AppCompatActivity {
         //
         //NA POTRZEBY TESTOW USUWANIE BAZY ZA KAZDYM RAZEM
         //
-        getApplicationContext().deleteDatabase("warsawcitigame.db");
-        dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
-        dbAdapter.open();
+        //getApplicationContext().deleteDatabase("warsawcitigame.db");
+
+
+        //STWORZENIE ADAPTERA DO BAZY DANYCH
+        //dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
+        //dbAdapter.open();
 
         //
         //WERSJA Z PROGRESS BAR'em. BARDZO DLUGO SIE WCZYTUJE
@@ -46,20 +56,25 @@ public class CitiGameActivity extends AppCompatActivity {
         //DbPopulateAsyncTask<Void, Void, Void> updateTask = new DbPopulateAsyncTask<Void, Void, Void>(CitiGameActivity.this,dbAdapter);
         //updateTask.execute();
 
+        // DLA PIERWSZEGO URUCHOMIENIA BEDZIE DOSC DLUGO TRWALO, NARAZIE ZAKOMENTOWALEM ZOSTAWIAJAC ORYGINALNA KLASE
+        //if (!dbAdapter.isAlreadyPopulated()) {
+        //    WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
+        //    try {
+        //        dbProcessor.populateDatabase();
+        //    } catch (IOException e) {
+        //        e.printStackTrace();
+        //    } catch (JSONException e) {
+        //      e.printStackTrace();
+        //    }
+        //}
 
-        if (!dbAdapter.isAlreadyPopulated()) {
-            WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
-            try {
-                dbProcessor.populateDatabase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-        Toast.makeText(getApplicationContext(), "posiadam: " + dbAdapter.treesCount() + " drzew", Toast.LENGTH_LONG).show();
+        // PRZYKLAD WYWOLANIA ZAPYTAN KTORE ZWRACAJA LISTY OBIEKTOW. DEFINICJE OBIEKTOW ZNAJDUJA SIE W PAKIECIE pl.orangeapi.warsawcitygame.db.pojo
+        //List<Shrub> s = dbAdapter.getAllShrubs();
+        //List<Tree> t = dbAdapter.getAllTrees();
+        //List<Property> p = dbAdapter.getAllProperties();
+        //List<Square> sq = dbAdapter.getAllSquares();
+        //List<Street> st = dbAdapter.getAllStreets();
+        //List<Forest> f = dbAdapter.getAllForests();
 
 
         setContentView(R.layout.activity_citi_game);
