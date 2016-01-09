@@ -71,6 +71,9 @@
         android:layout_height="wrap_content"
         android:text="Go Back To Menu"
         android:id="@+id/button_back_to_main_menu"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#2935bb"
+        android:alpha="0.5"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
