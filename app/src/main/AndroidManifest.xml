@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.orangeapi.warsawcitigame" >
+    package="pl.orangeapi.warsawcitigame">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="pl.orangeapi.warsawcitygame.layout.CitiGameActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:label="@string/app_name"
             android:name="pl.orangeapi.warsawcitygame.layout.MainMenuActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name="pl.orangeapi.warsawcitygame.layout.UndevelopedActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name="pl.orangeapi.warsawcitygame.layout.ConfigureNewGameActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name="pl.orangeapi.warsawcitygame.layout.GameActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name="pl.orangeapi.warsawcitygame.layout.NewGameActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-        <activity
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name="pl.orangeapi.warsawcitygame.layout.GameSummaryActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service
+            android:name="pl.orangeapi.warsawcitygame.layout.GPSService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
