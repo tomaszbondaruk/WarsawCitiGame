@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -33,6 +34,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
     private Button startNewGameButton;
     private CheckBox treesCheckBox, shrubsCheckBox, apartmentsCheckBox;
     private EditText noPlayersInput, noElementsInput;
+    private TextView currentRadius;
     private SeekBar gameRadius;
     private GameConfiguration config;
     private PopupWindow popUp;
@@ -45,10 +47,13 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
         config = new GameConfiguration();
         setContentView(R.layout.activity_configure_new_game);
 
+
         dbAdapter = new WarsawCitiGameDBAdapter(ConfigureNewGameActivity.this);
         dbAdapter.open();
 
         gpsReader = new GPSService(ConfigureNewGameActivity.this);
+
+        currentRadius = (TextView) findViewById(R.id.currentRadius);
 
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
@@ -66,6 +71,21 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
         });
 
         gameRadius = (SeekBar) findViewById(R.id.gameRadiusBar);
+        gameRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                currentRadius.setText("Obecny promień poszukiwań: " + (double) Math.round((10*((float)progress/100)) * 100) / 100 + "km");
+            }
+        });
 
         final Context context = this;
         startNewGameButton.setOnClickListener(new View.OnClickListener() {
