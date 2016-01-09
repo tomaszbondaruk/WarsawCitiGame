@@ -7,7 +7,7 @@
     android:weightSum="1"
     android:id="@+id/layout">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="147dp"
         android:id="@+id/editText2"
@@ -36,26 +36,39 @@
         android:layout_height="wrap_content"
         android:text="Stwórz nową grę"
         android:id="@+id/button_new_game"
-        android:alpha="0.5"
         android:visibility="visible"
-        android:background="#2935bb"
-        android:textColor="#ffffff" />
+        android:background="#a6dfd9d9"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Dołącz do istniejącej gry"
-        android:id="@+id/button_join_current_game" />
+        android:id="@+id/button_join_current_game"
+        android:background="#a6dfd9d9"
+        android:textColor="#737373"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sprawdź statystyki"
-        android:id="@+id/button_statistics" />
+        android:id="@+id/button_statistics"
+        android:background="#a6dfd9d9"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wyjdź"
-        android:id="@+id/button_quit" />
+        android:id="@+id/button_quit"
+        android:background="#a6dfd9d9"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 </LinearLayout>
