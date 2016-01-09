@@ -33,14 +33,16 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     LocationManager lm;
     Location l;
     String provider;
-    double x,y;
     int active;
 
     Button btnShowLocation;
     ArrayList<GameObject> goList;
     private final double TOLLERANCE = 1.79e-5;
 
-    TextView currentDistance;
+    TextView currentDistance, pointDescription, x, y;
+
+    private final double degToMSzer = 111.30;
+    private final double degToMDlug = 68.14;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,13 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_game);
 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
+        pointDescription = (TextView) findViewById(R.id.pointDescription);
+        x = (TextView) findViewById(R.id.x);
+        y = (TextView) findViewById(R.id.y);
+
         goList = (ArrayList<GameObject>) getIntent().getExtras().get("gameObjects");
         active=0;
+
         btnShowLocation = (Button) findViewById(R.id.button_finish_game);
 
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -62,7 +69,14 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         l = lm.getLastKnownLocation(provider);
         if(l!=null)
         {
-            Log.d("Errr", "Lecimy");
+            l = lm.getLastKnownLocation(provider);
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
+            double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
+            pointDescription.setText(goList.get(active).getDescription());
+            //currentDistance.setText("Dystans do obecnego punku : " + dist*degToM + "m");
+            x.setText("" + goList.get(active).getLongitude());
+            y.setText("" + goList.get(active).getLatitude());
         }
         else
         {
@@ -75,7 +89,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location arg0)
     {
-        Log.d("TEST","LocationChanged");
+        Log.d("TEST", "LocationChanged");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -85,10 +99,10 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
 
         if (diff_x > TOLLERANCE || diff_y > TOLLERANCE){
-            currentDistance.setText("Dystans to: " + dist);
+            //currentDistance.setText("Dystans do obecnego punku : " + degToM*dist + "m");
         }
         else {
-            active++;
+            goToNextPoint();
         }
         Log.d("ERROR", "Zginąłeś");
     }
@@ -105,5 +119,21 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
         // TODO Auto-generated method stub
+    }
+
+    private void goToNextPoint(){
+        active++;
+        if(active<=goList.size()){
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
+            double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
+            pointDescription.setText(goList.get(active).getDescription());
+            //currentDistance.setText("Dystans do obecnego punku : " + dist*degToM + "m");
+            x.setText("" + goList.get(active).getLongitude());
+            y.setText("" + goList.get(active).getLatitude());
+        }
+        else{
+            //ZAKONCZ GRE
+        }
     }
 }
