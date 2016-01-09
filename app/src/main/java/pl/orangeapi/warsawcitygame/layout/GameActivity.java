@@ -130,6 +130,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                             score.setTime("1");
                                             dbAdapter.addScore(score);
                                             Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                            finish();
                                             startActivity(intent);
                                             overridePendingTransition(0, 0);
                                             //go on here and dismiss dialog
@@ -143,6 +144,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                        finish();
                                         startActivity(intent);
                                         overridePendingTransition(0, 0);
                                     }
@@ -286,6 +288,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                                 score.setTime("1");
                                                 dbAdapter.addScore(score);
                                                 Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                                finish();
                                                 startActivity(intent);
                                                 overridePendingTransition(0, 0);
                                                 //go on here and dismiss dialog
@@ -298,6 +301,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                            finish();
                                             startActivity(intent);
                                             overridePendingTransition(0, 0);
                                         }
