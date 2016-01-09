@@ -135,8 +135,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     Log.d("TEST", "" + l.getLatitude());
                     Log.d("TEST", "" + l.getLongitude());
                     gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(),config.getNoElements(),l.getLatitude(),l.getLongitude(),config.getGameRadius());
-                    for(int i=0;i<5;i++)
-                        Log.d("LAYOUT", gameObjects.get(i).getDescription());
+
 
                     Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
                     Bundle bundle = new Bundle();

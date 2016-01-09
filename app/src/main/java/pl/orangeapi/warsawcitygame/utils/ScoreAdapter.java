@@ -56,7 +56,7 @@ public class ScoreAdapter extends BaseAdapter implements AdapterView.OnItemClick
         }
 
         holder.firstLine.setText("Nazwa użytkownika: "+ searchArrayList.get(position).getUser());
-        holder.secondLine.setText("Ilsć obiektów: "+searchArrayList.get(position).getNumber() +", w czasie: "+searchArrayList.get(position).getTime());
+        holder.secondLine.setText("Liczba obiektów: "+searchArrayList.get(position).getNumber() +", w czasie: "+searchArrayList.get(position).getTime());
         holder.thirdLine.setText("Punkty: "+ searchArrayList.get(position).getPoints());
 
         return convertView;

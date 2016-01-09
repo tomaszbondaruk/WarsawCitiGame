@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,9 @@ import java.util.List;
 
 import pl.orangeapi.warsawcitigame.R;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
+import pl.orangeapi.warsawcitygame.db.pojo.GameProgress;
+import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
+import pl.orangeapi.warsawcitygame.db.pojo.Tree;
 import pl.orangeapi.warsawcitygame.utils.*;
 
 /**
@@ -38,12 +42,15 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     Button btnShowLocation;
     ArrayList<GameObject> goList;
     private final double TOLLERANCE = 0.005;
+    ListView lv ;
+    List<GameProgress> gameProgress;
 
     TextView currentDistance, pointDescription, x, y;
 
     private final double degToMSzer = 111.30;
     private final double degToMDlug = 68.14;
 
+    GameProgressAdapter lvadapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +58,13 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
         pointDescription = (TextView) findViewById(R.id.pointDescription);
+        lv = (ListView) findViewById(R.id.listView);
         x = (TextView) findViewById(R.id.x);
         y = (TextView) findViewById(R.id.y);
+
+        gameProgress = new ArrayList<>();
+        lvadapter = new GameProgressAdapter(GameActivity.this, gameProgress);
+        lv.setAdapter(lvadapter);
 
         goList = (ArrayList<GameObject>) getIntent().getExtras().get("gameObjects");
         active=0;
@@ -131,6 +143,17 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
+            GameProgress gameSingleProgress = new GameProgress();
+            if(goList.get(active-1) instanceof Tree) {
+                gameSingleProgress.setType("Drzewo");
+            }
+            else if(goList.get(active-1) instanceof Shrub) {
+                gameSingleProgress.setType("Krzew");
+            }
+            gameSingleProgress.setName(goList.get(active - 1).getDescription());
+            gameSingleProgress.setTime("1");
+            gameProgress.add(gameSingleProgress);
+            lvadapter.notifyDataSetChanged();
         }
         else{
             //ZAKONCZ GRE
