@@ -146,7 +146,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
     private void goToNextPoint(){
         active++;
-        if(active<=goList.size()){
+        if(active<goList.size()){
             double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
             double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
