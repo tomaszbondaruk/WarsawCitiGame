@@ -14,7 +14,7 @@ public class GameConfiguration
     private double gameRadius;
     private int maxN, maxS, maxE, maxW;
     private int noElements;
-    private List<GameItem> gameItemList;
+    private String gameObjects;
 
     public GameConfiguration (){
         noParticipants = 0;
@@ -24,7 +24,7 @@ public class GameConfiguration
         maxE = 0;
         maxW = 0;
         noElements = 0;
-        gameItemList = new ArrayList<GameItem>();
+        gameObjects = "";
     }
 
     public void setNoParticipants(int noParticipants) {
@@ -55,12 +55,6 @@ public class GameConfiguration
         this.noElements = noElements;
     }
 
-    public void setGameItemList(List<GameItem> gameItemList) {
-        this.gameItemList = gameItemList;
-    }
-
-    public void addToGameItemList (GameItem item) { this.gameItemList.add(item); }
-
     public int getNoParticipants() {
         return noParticipants;
     }
@@ -89,7 +83,11 @@ public class GameConfiguration
         return noElements;
     }
 
-    public List<GameItem> getGameItemList() {
-        return gameItemList;
+    public String getGameObjects() {
+        return gameObjects;
+    }
+
+    public void setGameObjects(String gameObjects) {
+        this.gameObjects = gameObjects;
     }
 }

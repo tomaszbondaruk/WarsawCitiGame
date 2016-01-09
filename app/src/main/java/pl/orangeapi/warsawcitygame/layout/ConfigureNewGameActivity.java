@@ -2,6 +2,7 @@ package pl.orangeapi.warsawcitygame.layout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import pl.orangeapi.warsawcitigame.R;
 import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
+import pl.orangeapi.warsawcitygame.Exception.NothingWasCheckedException;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.utils.GPSService;
@@ -91,32 +93,43 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
         startNewGameButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-
-                if(treesCheckBox.isChecked())
-                    config.addToGameItemList(GameItem.TREES);
-                if(shrubsCheckBox.isChecked())
-                    config.addToGameItemList(GameItem.SHRUBS);
-
-                config.setNoParticipants(1);
-                config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
-                config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
-
                 try {
-                    gameObjects = dbAdapter.getStartingPoints("Drzewo",config.getNoElements(),gpsReader.getLatitude(),gpsReader.getLongitude(),config.getGameRadius());
+                    if(treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
+                        config.setGameObjects("Drzewo");
+                    if(!treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
+                        config.setGameObjects("Krzewy");
+                    if(treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
+                        config.setGameObjects("Drzewa-Krzewy");
+                    if(!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
+                        throw new NothingWasCheckedException("Nic nie zostało wybrane chuju złamany!!!!!!");
+
+                    config.setNoParticipants(1);
+                    config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
+                    config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
+
+                    gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(),config.getNoElements(),gpsReader.getLatitude(),gpsReader.getLongitude(),config.getGameRadius());
                     for(int i=0;i<5;i++)
                         Log.d("LAYOUT", gameObjects.get(i).getDescription());
+
+                    Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("gameObjects", gameObjects);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
                 catch(NotEnoughObjectsInAreaException e){
-                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + gpsReader.getLongitude() + " " + gpsReader.getLatitude()
+                            ,Toast.LENGTH_LONG).show();
+                }
+                catch (NothingWasCheckedException e){
+                    Toast.makeText(ConfigureNewGameActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                    treesCheckBox.setTextColor(Color.RED);
+                    shrubsCheckBox.setTextColor(Color.RED);
                 }
                 catch (Exception e){
 
                 }
-                Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("gameObjects", gameObjects);
-                intent.putExtras(bundle);
-                startActivity(intent);
+
             }
         });
     }
