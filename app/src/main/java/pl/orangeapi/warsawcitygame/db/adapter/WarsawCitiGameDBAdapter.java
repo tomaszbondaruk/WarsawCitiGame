@@ -30,7 +30,7 @@ import pl.orangeapi.warsawcitygame.utils.GameObjectList;
  * Created by Grzegorz on 2015-12-30.
  */
 public class WarsawCitiGameDBAdapter {
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
     public static final String DB_NAME = "warsawcitigame1.db";
     public static final String DB_TREE_TABLE ="tree";
     public static final String DB_SHRUB_TABLE= "shrub";
@@ -58,6 +58,7 @@ public class WarsawCitiGameDBAdapter {
     public static final String COLUMN_OBJECT_NUMBER = "number";
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_POINTS= "points";
+    public static final String COLUMN_USER= "user";
 
 
     public static final String CREATE_TREE_TABLE = "CREATE TABLE "+ DB_TREE_TABLE +"("+
@@ -82,6 +83,7 @@ public class WarsawCitiGameDBAdapter {
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
             COLUMN_POINTS + " TEXT,"+
             COLUMN_TIME + " TEXT," +
+            COLUMN_USER + " TEXT," +
             COLUMN_OBJECT_NUMBER + " TEXT)";
     public static final String CREATE_PROPERTY_TABLE = "CREATE TABLE "+ DB_PROPERTY_TABLE +"("+
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -170,10 +172,18 @@ public class WarsawCitiGameDBAdapter {
 
         return trees;
     }
-    public List<Score> getAllScores(){
-
+    public List<Score> getAllScores(String user , String sort){
+        String query = "SELECT * FROM score";
         List<Score> scores = new ArrayList<>();
-        String query  ="SELECT * FROM score";
+        if (user.isEmpty() && sort.isEmpty())
+            query  ="SELECT * FROM score";
+        if (!user.isEmpty() && !sort.isEmpty())
+            query = "SELECT * FROM score where user ='"+user+"' ORDER BY "+sort+" DESC";
+        if (!user.isEmpty())
+            query = "SELECT * FROM score where user ='"+user+"'";
+        if (!sort.isEmpty())
+            query="SELECT * FROM SCORE ORDER BY "+ sort+" DESC";
+
         Cursor cursor = db.rawQuery(query,null);
         if (cursor.moveToFirst()) {
             do {
@@ -182,6 +192,7 @@ public class WarsawCitiGameDBAdapter {
                 score.setNumber(cursor.getString(cursor.getColumnIndex(COLUMN_OBJECT_NUMBER)));
                 score.setPoints(cursor.getString(cursor.getColumnIndex(COLUMN_POINTS)));
                 score.setPoints(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                score.setUser(cursor.getString(cursor.getColumnIndex(COLUMN_USER)));
                 scores.add(score);
 
             } while (cursor.moveToNext());
@@ -434,31 +445,33 @@ public class WarsawCitiGameDBAdapter {
     }
 
     public GameObjectList<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
-        Double degreeToKm =111.19;
-        Double radiusInDegree = radius / degreeToKm;
+        final double degToMSzer = 111.30;
+        final double degToMDlug = 68.14;
+        Double radiusInDegreeLat = radius / degToMSzer;
+        Double radiusInDegreeLng = radius / degToMDlug;
         GameObjectList<GameObject> lgo = new GameObjectList<>();
         switch (object){
             case "Drzewo" :
-                String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng - radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo = getTreeToGame(query,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
 
                 return lgo;
             case "Krzewy" :
-                String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng -radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo = getShrubToGame(queryShrub,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
                 return lgo;
             case "Drzewa-Krzewy":
-                String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng - radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo=getTreeToGame(queryTreeBoth,lgo);
-                String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng -radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo=getShrubToGame(queryShrubBoth,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
