@@ -183,7 +183,7 @@ public class WarsawCitiGameDBAdapter {
             query = "SELECT * FROM score where user ='"+user+"'";
         if (!sort.isEmpty())
             query="SELECT * FROM SCORE ORDER BY "+ sort+" DESC";
-        
+
         Cursor cursor = db.rawQuery(query,null);
         if (cursor.moveToFirst()) {
             do {
@@ -445,31 +445,33 @@ public class WarsawCitiGameDBAdapter {
     }
 
     public GameObjectList<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
-        Double degreeToKm =111.19;
-        Double radiusInDegree = radius / degreeToKm;
+        final double degToMSzer = 111.30;
+        final double degToMDlug = 68.14;
+        Double radiusInDegreeLat = radius / degToMSzer;
+        Double radiusInDegreeLng = radius / degToMDlug;
         GameObjectList<GameObject> lgo = new GameObjectList<>();
         switch (object){
             case "Drzewo" :
-                String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng - radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo = getTreeToGame(query,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
 
                 return lgo;
             case "Krzewy" :
-                String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng -radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo = getShrubToGame(queryShrub,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
                 return lgo;
             case "Drzewa-Krzewy":
-                String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng - radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo=getTreeToGame(queryTreeBoth,lgo);
-                String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
-                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
+                        " and longitude > "+(lng -radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo=getShrubToGame(queryShrubBoth,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
