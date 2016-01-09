@@ -70,6 +70,7 @@ public class CitiGameActivity extends AppCompatActivity {
         if (!dbAdapter.isAlreadyPopulated()) {
             WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
             try {
+                Toast.makeText(CitiGameActivity.this, "To jest prawdopodobnie pierwsze uruchomienie aplikacji, pobieram dane. Może to trochę potrwać...",Toast.LENGTH_LONG).show();
                 dbProcessor.populateDatabase();
             } catch (IOException e) {
                 e.printStackTrace();

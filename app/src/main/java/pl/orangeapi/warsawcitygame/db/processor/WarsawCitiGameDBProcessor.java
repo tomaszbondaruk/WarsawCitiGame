@@ -1,6 +1,7 @@
 package pl.orangeapi.warsawcitygame.db.processor;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class WarsawCitiGameDBProcessor {
     public void populateDatabase() throws IOException, JSONException {
         populateTree();
         populateShrub();
+        Toast.makeText(context, "Dane zostały zapisane poprawnie", Toast.LENGTH_LONG).show();
         //populateProperty();
         //populateSquare();
         //populateStreets();

@@ -19,6 +19,7 @@ import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.db.pojo.Property;
+import pl.orangeapi.warsawcitygame.db.pojo.Score;
 import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Square;
 import pl.orangeapi.warsawcitygame.db.pojo.Street;
@@ -29,7 +30,7 @@ import pl.orangeapi.warsawcitygame.utils.GameObjectList;
  * Created by Grzegorz on 2015-12-30.
  */
 public class WarsawCitiGameDBAdapter {
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
     public static final String DB_NAME = "warsawcitigame1.db";
     public static final String DB_TREE_TABLE ="tree";
     public static final String DB_SHRUB_TABLE= "shrub";
@@ -37,6 +38,7 @@ public class WarsawCitiGameDBAdapter {
     public static final String DB_FOREST_TABLE = "forest";
     public static final String DB_SQUARE_TABLE = "square";
     public static final String DB_STREET_TABLE = "street";
+    public static final String DB_SCORE_TABLE = "score";
 
     public static final String KEY_ID ="_id";
 
@@ -53,6 +55,10 @@ public class WarsawCitiGameDBAdapter {
     public static final String COLUMN_SURFACE = "surface";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_OBJECT_NUMBER = "number";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_POINTS= "points";
+
 
     public static final String CREATE_TREE_TABLE = "CREATE TABLE "+ DB_TREE_TABLE +"("+
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -72,6 +78,11 @@ public class WarsawCitiGameDBAdapter {
             COLUMN_STREET_NUMBER + " TEXT," +
             COLUMN_DISTRICT + " TEXT,"+
             COLUMN_CLASS +" TEXT)";
+    public static final String CREATE_SCORE_TABLE ="CREATE TABLE "+ DB_SCORE_TABLE+" ("+
+            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
+            COLUMN_POINTS + " TEXT,"+
+            COLUMN_TIME + " TEXT," +
+            COLUMN_OBJECT_NUMBER + " TEXT)";
     public static final String CREATE_PROPERTY_TABLE = "CREATE TABLE "+ DB_PROPERTY_TABLE +"("+
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COLUMN_LATIDUDE + " DOUBLE," +
@@ -158,6 +169,33 @@ public class WarsawCitiGameDBAdapter {
         }
 
         return trees;
+    }
+    public List<Score> getAllScores(){
+
+        List<Score> scores = new ArrayList<>();
+        String query  ="SELECT * FROM score";
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            do {
+                Score score = new Score();
+                score.set_id(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+                score.setNumber(cursor.getString(cursor.getColumnIndex(COLUMN_OBJECT_NUMBER)));
+                score.setPoints(cursor.getString(cursor.getColumnIndex(COLUMN_POINTS)));
+                score.setPoints(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                scores.add(score);
+
+            } while (cursor.moveToNext());
+        }
+
+        return scores;
+    }
+    public void addScore(Score score){
+        SQLiteStatement ps = db.compileStatement("insert into score ("+COLUMN_TIME+", "+COLUMN_POINTS+", "+COLUMN_OBJECT_NUMBER+") values (?,?,?)");
+        ps.bindString(1, score.getTime());
+        ps.bindString(2, score.getPoints());
+        ps.bindString(3, score.getNumber());
+
+        ps.execute();
     }
     public void addTree(Tree tree){
         SQLiteStatement ps = db.compileStatement("insert into tree (latitude, longitude, name, street, streetNumber, district, class) values (?,?,?,?,?,?,?)");
@@ -485,10 +523,11 @@ public class WarsawCitiGameDBAdapter {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_TREE_TABLE);
             db.execSQL(CREATE_SHRUB_TABLE);
-            db.execSQL(CREATE_PROPERTY_TABLE);
-            db.execSQL(CREATE_SQUARE_TABLE);
-            db.execSQL(CREATE_STREET_TABLE);
-            db.execSQL(CREATE_FOREST_TABLE);
+            db.execSQL(CREATE_SCORE_TABLE);
+            //db.execSQL(CREATE_PROPERTY_TABLE);
+            //db.execSQL(CREATE_SQUARE_TABLE);
+            //db.execSQL(CREATE_STREET_TABLE);
+           // db.execSQL(CREATE_FOREST_TABLE);
 
 
         }
@@ -497,12 +536,13 @@ public class WarsawCitiGameDBAdapter {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("drop table tree");
             db.execSQL("drop table shrub");
-            db.execSQL("drop table property");
-            db.execSQL("drop table square");
+            db.execSQL("drop table score");
+            //db.execSQL("drop table square");
             db.execSQL(CREATE_TREE_TABLE);
             db.execSQL(CREATE_SHRUB_TABLE);
-            db.execSQL(CREATE_PROPERTY_TABLE);
-            db.execSQL(CREATE_SQUARE_TABLE);
+            //db.execSQL(CREATE_PROPERTY_TABLE);
+            //db.execSQL(CREATE_SQUARE_TABLE);
+            db.execSQL(CREATE_SCORE_TABLE);
 
         }
     }
