@@ -137,7 +137,7 @@
                 android:ems="10"
                 android:id="@+id/noElementsInput"
                 android:background="#ffffff"
-                android:text="Wprowadź liczbę elementów"
+                android:text="10"
                 android:textAlignment="center"
                 android:digits="1234567890"
                 android:textSize="15dp"

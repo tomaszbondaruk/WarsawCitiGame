@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 
 import pl.orangeapi.warsawcitigame.R;
 import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
+import pl.orangeapi.warsawcitygame.utils.GPSService;
 import pl.orangeapi.warsawcitygame.utils.GameConfiguration;
 import pl.orangeapi.warsawcitygame.utils.GameItem;
 import pl.orangeapi.warsawcitygame.utils.GameObjectList;
@@ -25,6 +27,8 @@ import pl.orangeapi.warsawcitygame.utils.GameObjectList;
 public class ConfigureNewGameActivity extends AppCompatActivity {
 
     WarsawCitiGameDBAdapter dbAdapter;
+
+    private GPSService gpsReader;
 
     private Button startNewGameButton;
     private CheckBox treesCheckBox, shrubsCheckBox, apartmentsCheckBox;
@@ -43,6 +47,8 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
 
         dbAdapter = new WarsawCitiGameDBAdapter(ConfigureNewGameActivity.this);
         dbAdapter.open();
+
+        gpsReader = new GPSService(ConfigureNewGameActivity.this);
 
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
@@ -73,16 +79,15 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
 
                 config.setNoParticipants(1);
                 config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
-                Log.d("LAYOUT", noElementsInput.getText().toString());
                 config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
-                Log.d("LAYOUT", "" + (10 * ((float) gameRadius.getProgress() / 100)));
+
                 try {
-                    gameObjects = dbAdapter.getStartingPoints("Drzewo", config.getNoElements(), 52.210252, 21.045218, config.getGameRadius());
+                    gameObjects = dbAdapter.getStartingPoints("Drzewo",config.getNoElements(),gpsReader.getLatitude(),gpsReader.getLongitude(),config.getGameRadius());
                     for(int i=0;i<5;i++)
                         Log.d("LAYOUT", gameObjects.get(i).getDescription());
                 }
                 catch(NotEnoughObjectsInAreaException e){
-
+                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów",Toast.LENGTH_LONG).show();
                 }
                 catch (Exception e){
 

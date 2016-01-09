@@ -1,9 +1,11 @@
 package pl.orangeapi.warsawcitygame.db.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by Grzegorz on 2016-01-09.
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable{
     protected Double longitude;
     protected Double latitude;
 
