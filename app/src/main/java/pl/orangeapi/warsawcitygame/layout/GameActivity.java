@@ -26,6 +26,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import pl.orangeapi.warsawcitigame.R;
@@ -43,6 +44,7 @@ import pl.orangeapi.warsawcitygame.utils.*;
 public class GameActivity extends AppCompatActivity implements LocationListener {
     LocationManager lm;
     Location l;
+    Date startGame, startPoint;
     String provider;
     int active;
     WarsawCitiGameDBAdapter dbAdapter;
@@ -66,6 +68,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
         dbAdapter = new WarsawCitiGameDBAdapter(GameActivity.this);
         dbAdapter.open();
+
+        startGame = new Date();
+        startPoint = new Date();
 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
         pointDescription = (TextView) findViewById(R.id.pointDescription);
@@ -130,6 +135,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                             score.setTime("1");
                                             dbAdapter.addScore(score);
                                             Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                            finish();
                                             startActivity(intent);
                                             overridePendingTransition(0, 0);
                                             //go on here and dismiss dialog
@@ -143,6 +149,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                        finish();
                                         startActivity(intent);
                                         overridePendingTransition(0, 0);
                                     }
@@ -226,9 +233,14 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
+            currentDistance.setText("Dystans do obecnego punku : " + String.format("%0.2f", dist) + "km");
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
+            Date temp = new Date();
+            long diff = (temp.getTime() - startPoint.getTime())/1000;
+            long minutes = diff/60;
+            long seconds = diff-minutes*60;
+            startPoint = temp;
             GameProgress gameSingleProgress = new GameProgress();
             if(goList.get(active-1) instanceof Tree) {
                 gameSingleProgress.setType("Drzewo");
@@ -237,7 +249,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 gameSingleProgress.setType("Krzew");
             }
             gameSingleProgress.setName(goList.get(active - 1).getDescription());
-            gameSingleProgress.setTime("1");
+            gameSingleProgress.setTime("" + String.format("%02d", minutes)+":"+String.format("%02d", seconds));
             gameProgress.add(gameSingleProgress);
             lvadapter.notifyDataSetChanged();
         }
@@ -286,6 +298,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                                 score.setTime("1");
                                                 dbAdapter.addScore(score);
                                                 Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                                finish();
                                                 startActivity(intent);
                                                 overridePendingTransition(0, 0);
                                                 //go on here and dismiss dialog
@@ -298,6 +311,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                            finish();
                                             startActivity(intent);
                                             overridePendingTransition(0, 0);
                                         }
