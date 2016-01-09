@@ -37,7 +37,7 @@ public class Shrub extends  GameObject{
 
     @Override
     public String getDescription() {
-        return "To jest krzew gatunku "+getName() +" - "+getShrubClass();
+        return "Krzew gatunku "+getName() +" - "+getShrubClass();
     }
 
     public String getName() {

@@ -63,6 +63,6 @@ public class Tree extends GameObject{
 
     @Override
     public String getDescription() {
-        return "To jest drzewo gatunku "+this.getName();
+        return "Drzewo gatunku "+this.getName();
     }
 }

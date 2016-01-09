@@ -2,6 +2,8 @@ package pl.orangeapi.warsawcitygame.layout;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -10,8 +12,10 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.orangeapi.warsawcitigame.R;
+import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.db.pojo.GameProgress;
+import pl.orangeapi.warsawcitygame.db.pojo.Score;
 import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Tree;
 import pl.orangeapi.warsawcitygame.utils.*;
@@ -39,7 +45,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     Location l;
     String provider;
     int active;
-
+    WarsawCitiGameDBAdapter dbAdapter;
     Button btnShowLocation;
     ArrayList<GameObject> goList;
     private final double TOLLERANCE = 0.005;
@@ -57,6 +63,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        dbAdapter = new WarsawCitiGameDBAdapter(GameActivity.this);
+        dbAdapter.open();
 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
         pointDescription = (TextView) findViewById(R.id.pointDescription);
@@ -158,7 +167,55 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             lvadapter.notifyDataSetChanged();
         }
         else{
-            //ZAKONCZ GRE
+            LayoutInflater li = LayoutInflater.from(GameActivity.this);
+            View promptsView = li.inflate(R.layout.congratz_dialog, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    GameActivity.this);
+
+            // set prompts.xml to alertdialog builder
+            alertDialogBuilder.setView(promptsView);
+
+            final EditText userInput = (EditText) promptsView
+                    .findViewById(R.id.nameEditText);
+
+            // set dialog message
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Zapisz wynik",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    if ( ! (userInput.getText().equals(""))) {
+                                        Score score= new Score();
+                                        score.setUser(userInput.getText().toString());
+                                        score.setNumber("" + goList.size());
+                                        score.setPoints("1");
+                                        score.setTime("1");
+                                        dbAdapter.addScore(score);
+                                        Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                        startActivity(intent);
+
+                                        //go on here and dismiss dialog
+                                    }
+                                    else
+                                        Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę",Toast.LENGTH_LONG).show();
+
+                                }
+                            })
+                    .setNegativeButton("Zakończ",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
         }
     }
 }
