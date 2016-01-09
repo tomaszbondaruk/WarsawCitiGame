@@ -1,7 +1,6 @@
 package pl.orangeapi.warsawcitygame.db.processor;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,13 +12,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import pl.orangeapi.warsawcitigame.R;
-import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
 import pl.orangeapi.warsawcitygame.db.pojo.Property;
-import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Square;
 import pl.orangeapi.warsawcitygame.db.pojo.Street;
-import pl.orangeapi.warsawcitygame.db.pojo.Tree;
 
 /**
  * Created by Grzegorz on 2015-12-30.

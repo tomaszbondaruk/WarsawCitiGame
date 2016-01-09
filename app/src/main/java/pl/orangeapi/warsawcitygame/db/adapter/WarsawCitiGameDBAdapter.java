@@ -397,8 +397,8 @@ public class WarsawCitiGameDBAdapter {
         List<GameObject> lgo = new ArrayList<>();
         switch (object){
             case "Drzewo" :
-                String query  ="SELECT * FROM tree where latitude > "+(lat+radiusInDegree)+" and latitude < "+(lat-radiusInDegree)+ " and longitude > "+(lng+radiusInDegree)+
-                        " and longitude < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
+                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
                 Cursor cursor = db.rawQuery(query,null);
                 if (cursor.moveToFirst()) {
                     do {
@@ -414,8 +414,8 @@ public class WarsawCitiGameDBAdapter {
 
                 return lgo;
             case "Krzewy" :
-                String queryShrub  ="SELECT * FROM shrub where latitude > "+(lat+radiusInDegree)+" and latitude < "+(lat-radiusInDegree)+ " and longitude > "+(lng+radiusInDegree)+
-                        " and longitude < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
+                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
                 Cursor cursorShrub = db.rawQuery(queryShrub,null);
                 if (cursorShrub.moveToFirst()) {
                     do {
