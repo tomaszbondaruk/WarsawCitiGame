@@ -7,15 +7,17 @@
     android:weightSum="1"
     android:id="@+id/layout">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText7"
+        android:id="@+id/pointDescription"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.27"
+        android:layout_weight="0.37"
         android:text="Description of current point"
         android:textColor="#ffffff"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="18dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -28,15 +30,50 @@
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#ffffff" />
 
-    <Space
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="322dp"
+        android:id="@+id/scrollView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.39">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="284dp"
+            android:id="@+id/listView"
+            android:layout_gravity="center_horizontal" />
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.21" />
+        android:layout_weight="0.14"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/x"
+            android:layout_weight="0.34"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/y"
+            android:layout_weight="0.55"
+            android:textColor="#ffffff" />
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TECH: Finish game"
+        android:text="Zakończ grę"
         android:id="@+id/button_finish_game" />
 </LinearLayout>
