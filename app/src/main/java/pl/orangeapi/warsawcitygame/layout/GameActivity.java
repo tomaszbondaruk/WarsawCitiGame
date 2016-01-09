@@ -98,9 +98,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                         .findViewById(R.id.nameEditText);
 
                 // set textview score
-                TextView score = (TextView) findViewById(R.id.points);
-                TextView time = (TextView) findViewById(R.id.time);
-                TextView objects = (TextView) findViewById(R.id.objects);
+                TextView score = (TextView) promptsView.findViewById(R.id.points1);
+                TextView time = (TextView) promptsView.findViewById(R.id.time1);
+                TextView objects = (TextView) promptsView.findViewById(R.id.objects1);
                 score.setText("Punkty: ");
                 time.setText("Czas: ");
                 objects.setText("Zdobyte obiekty: ");
@@ -246,9 +246,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                     .findViewById(R.id.nameEditText);
 
             // set textview score
-            TextView score = (TextView) findViewById(R.id.points);
-            TextView time = (TextView) findViewById(R.id.time);
-            TextView objects = (TextView) findViewById(R.id.objects);
+            TextView score = (TextView) promptsView.findViewById(R.id.points);
+            TextView time = (TextView) promptsView.findViewById(R.id.time);
+            TextView objects = (TextView) promptsView.findViewById(R.id.objects);
             score.setText("Punkty: ");
             time.setText("Czas: ");
             objects.setText("Zdobyte obiekty: ");
