@@ -1,28 +1,38 @@
 package pl.orangeapi.warsawcitygame.layout;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.List;
+
 import pl.orangeapi.warsawcitigame.R;
-import pl.orangeapi.warsawcitygame.utils.GPSService;
+import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
+import pl.orangeapi.warsawcitygame.utils.*;
 
 /**
  * Created by Tomek on 2015-12-18.
  */
-public class GameActivity extends AppCompatActivity {
+public class  GameActivity extends AppCompatActivity {
     Button btnShowLocation;
     GPSService gps;
+    GameObjectList<GameObject> goList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        goList = (GameObjectList<GameObject>) getIntent().getExtras().get("gameObjects");
+
         btnShowLocation = (Button) findViewById(R.id.button_finish_game);
 
+        //tree position
+        double[] pos = {1.0,1.0};
+        new GPSCheck(GameActivity.this, pos).execute();
         // show location button click event
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
 
