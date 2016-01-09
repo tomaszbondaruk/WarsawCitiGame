@@ -175,13 +175,13 @@ public class WarsawCitiGameDBAdapter {
     public List<Score> getAllScores(String user , String sort){
         String query = "SELECT * FROM score";
         List<Score> scores = new ArrayList<>();
-        if (user.isEmpty() && sort.isEmpty())
-            query  ="SELECT * FROM score";
-        if (!user.isEmpty() && !sort.isEmpty())
+        if (user== null && sort==null)
+            query  ="SELECT * FROM score order by points desc";
+        if (user!=null && sort!=null)
             query = "SELECT * FROM score where user ='"+user+"' ORDER BY "+sort+" DESC";
-        if (!user.isEmpty())
+        if (user != null)
             query = "SELECT * FROM score where user ='"+user+"'";
-        if (!sort.isEmpty())
+        if (sort !=null)
             query="SELECT * FROM SCORE ORDER BY "+ sort+" DESC";
 
         Cursor cursor = db.rawQuery(query,null);
