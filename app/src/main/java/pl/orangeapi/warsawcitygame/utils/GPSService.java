@@ -1,4 +1,4 @@
-package pl.orangeapi.warsawcitygame.layout;
+package pl.orangeapi.warsawcitygame.utils;
 
 import android.Manifest;
 import android.app.AlertDialog;

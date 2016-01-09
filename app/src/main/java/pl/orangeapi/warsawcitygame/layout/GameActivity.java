@@ -1,10 +1,5 @@
 package pl.orangeapi.warsawcitygame.layout;
 
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import pl.orangeapi.warsawcitigame.R;
+import pl.orangeapi.warsawcitygame.utils.GPSService;
 
 /**
  * Created by Tomek on 2015-12-18.
