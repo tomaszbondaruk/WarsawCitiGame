@@ -1,9 +1,16 @@
 package pl.orangeapi.warsawcitygame.layout;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +34,11 @@ import pl.orangeapi.warsawcitygame.utils.GameConfiguration;
 import pl.orangeapi.warsawcitygame.utils.GameItem;
 import pl.orangeapi.warsawcitygame.utils.GameObjectList;
 
-public class ConfigureNewGameActivity extends AppCompatActivity {
+public class ConfigureNewGameActivity extends AppCompatActivity implements LocationListener {
+
+    LocationManager lm;
+    Location l;
+    String provider;
 
     WarsawCitiGameDBAdapter dbAdapter;
 
@@ -49,17 +60,24 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
         config = new GameConfiguration();
         setContentView(R.layout.activity_configure_new_game);
 
+        lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Criteria c = new Criteria();
+        provider = lm.getBestProvider(c, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, ConfigureNewGameActivity.this);
+
 
         dbAdapter = new WarsawCitiGameDBAdapter(ConfigureNewGameActivity.this);
         dbAdapter.open();
-
-        gpsReader = new GPSService(ConfigureNewGameActivity.this);
 
         currentRadius = (TextView) findViewById(R.id.currentRadius);
 
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
         treesCheckBox = (CheckBox) findViewById(R.id.checkTrees);
+
         shrubsCheckBox = (CheckBox) findViewById(R.id.checkShrubs);
 
         noPlayersInput = (EditText) findViewById(R.id.numberOfPlayersInput);
@@ -94,6 +112,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
 
             public void onClick(View arg0) {
                 try {
+                    gpsReader = new GPSService(ConfigureNewGameActivity.this);
                     if(treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
                         config.setGameObjects("Drzewo");
                     if(!treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
@@ -107,7 +126,15 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
                     config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
                     config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
 
-                    gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(),config.getNoElements(),gpsReader.getLatitude(),gpsReader.getLongitude(),config.getGameRadius());
+                    if (ActivityCompat.checkSelfPermission( ConfigureNewGameActivity.this,
+                                                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                                                            && ActivityCompat.checkSelfPermission(ConfigureNewGameActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        return;
+                    }
+                    l = lm.getLastKnownLocation(provider);
+                    Log.d("TEST", "" + l.getLatitude());
+                    Log.d("TEST", "" + l.getLongitude());
+                    gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(),config.getNoElements(),l.getLatitude(),l.getLongitude(),config.getGameRadius());
                     for(int i=0;i<5;i++)
                         Log.d("LAYOUT", gameObjects.get(i).getDescription());
 
@@ -118,7 +145,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 catch(NotEnoughObjectsInAreaException e){
-                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + gpsReader.getLongitude() + " " + gpsReader.getLatitude()
+                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + l.getLongitude() + " " + l.getLatitude()
                             ,Toast.LENGTH_LONG).show();
                 }
                 catch (NothingWasCheckedException e){
@@ -136,6 +163,26 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
 
     private void getGameConfiguration(){
 
+    }
+
+
+    @Override
+    public void onLocationChanged(Location arg0)
+    {
+    }
+
+    @Override
+    public void onProviderDisabled(String arg0) {
+        // TODO Auto-generated method stub
+    }
+    @Override
+    public void onProviderEnabled(String arg0) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+        // TODO Auto-generated method stub
     }
 
 }

@@ -55,6 +55,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         Criteria c = new Criteria();
         provider = lm.getBestProvider(c, false);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, GameActivity.this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -74,6 +75,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location arg0)
     {
+        Log.d("TEST","LocationChanged");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        l = lm.getLastKnownLocation(provider);
         double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
         double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
         double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
