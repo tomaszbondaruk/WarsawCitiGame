@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +46,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     ListView lv ;
     List<GameProgress> gameProgress;
 
-    TextView currentDistance, pointDescription, x, y;
+    TextView currentDistance, pointDescription;
+    EditText x, y;
 
     private final double degToMSzer = 111.30;
     private final double degToMDlug = 68.14;
@@ -59,8 +61,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
         pointDescription = (TextView) findViewById(R.id.pointDescription);
         lv = (ListView) findViewById(R.id.listView);
-        x = (TextView) findViewById(R.id.x);
-        y = (TextView) findViewById(R.id.y);
+        x = (EditText) findViewById(R.id.x);
+        y = (EditText) findViewById(R.id.y);
 
         gameProgress = new ArrayList<>();
         lvadapter = new GameProgressAdapter(GameActivity.this, gameProgress);

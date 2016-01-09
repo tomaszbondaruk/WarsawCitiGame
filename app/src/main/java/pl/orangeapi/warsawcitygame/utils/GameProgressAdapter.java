@@ -17,7 +17,7 @@ import pl.orangeapi.warsawcitygame.db.pojo.GameProgress;
 import pl.orangeapi.warsawcitygame.db.pojo.Score;
 
 public class GameProgressAdapter extends BaseAdapter {
-    private static List<GameProgress> searchArrayList;
+    private List<GameProgress> searchArrayList;
 
     private LayoutInflater mInflater;
     private ImageView iv;
@@ -43,8 +43,6 @@ public class GameProgressAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        for (GameProgress gp : searchArrayList) {
-            notifyDataSetChanged();
             ViewHolder holder;
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.row_single, null);
@@ -53,6 +51,7 @@ public class GameProgressAdapter extends BaseAdapter {
                 iv = (ImageView) convertView.findViewById(R.id.icon);
                 holder.firstLine = (TextView) convertView.findViewById(R.id.firstLine);
                 holder.secondLine = (TextView) convertView.findViewById(R.id.secondLine);
+                holder.number = (TextView) convertView.findViewById(R.id.number);
 
 
                 convertView.setTag(holder);
@@ -67,8 +66,7 @@ public class GameProgressAdapter extends BaseAdapter {
             }
             holder.firstLine.setText("Nazwa: " + searchArrayList.get(position).getName());
             holder.secondLine.setText("Czas: " + searchArrayList.get(position).getTime());
-            // notifyDataSetChanged();
-        }
+            holder.number.setText(""+(position+1)+".");
 
         return convertView;
     }
@@ -76,5 +74,6 @@ public class GameProgressAdapter extends BaseAdapter {
     static class ViewHolder {
         TextView firstLine;
         TextView secondLine;
+        TextView number;
     }
 }
