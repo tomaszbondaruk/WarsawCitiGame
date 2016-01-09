@@ -1,7 +1,9 @@
 package pl.orangeapi.warsawcitygame.layout;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -68,6 +70,9 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, ConfigureNewGameActivity.this);
 
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            showGPSDisabledAlertToUser();
+        }
 
         dbAdapter = new WarsawCitiGameDBAdapter(ConfigureNewGameActivity.this);
         dbAdapter.open();
@@ -112,37 +117,40 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
             public void onClick(View arg0) {
                 try {
-                    gpsReader = new GPSService(ConfigureNewGameActivity.this);
-                    if(treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                        config.setGameObjects("Drzewo");
-                    if(!treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
-                        config.setGameObjects("Krzewy");
-                    if(treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
-                        config.setGameObjects("Drzewa-Krzewy");
-                    if(!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                        throw new NothingWasCheckedException("Nic nie zostało wybrane chuju złamany!!!!!!");
-
-                    config.setNoParticipants(1);
-                    config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
-                    config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
-
                     if (ActivityCompat.checkSelfPermission( ConfigureNewGameActivity.this,
-                                                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                                                            && ActivityCompat.checkSelfPermission(ConfigureNewGameActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(ConfigureNewGameActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         return;
                     }
                     l = lm.getLastKnownLocation(provider);
-                    Log.d("TEST", "" + l.getLatitude());
-                    Log.d("TEST", "" + l.getLongitude());
-                    gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(),config.getNoElements(),l.getLatitude(),l.getLongitude(),config.getGameRadius());
+                    if(l!=null) {
+                        if (treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
+                            config.setGameObjects("Drzewo");
+                        if (!treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
+                            config.setGameObjects("Krzewy");
+                        if (treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
+                            config.setGameObjects("Drzewa-Krzewy");
+                        if (!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
+                            throw new NothingWasCheckedException("Nic nie zostało wybrane chuju złamany!!!!!!");
+
+                        config.setNoParticipants(1);
+                        config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
+                        config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
 
 
-                    Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("gameObjects", gameObjects);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
+                        gameObjects = dbAdapter.getStartingPoints(config.getGameObjects(), config.getNoElements(), l.getLatitude(), l.getLongitude(), config.getGameRadius());
+
+
+                        Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("gameObjects", gameObjects);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    }
+                    else{
+                        showGPSDisabledAlertToUser();
+                    }
                 }
                 catch(NotEnoughObjectsInAreaException e){
                     Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + l.getLongitude() + " " + l.getLatitude()
@@ -165,6 +173,27 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
     }
 
+    private void showGPSDisabledAlertToUser(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Wygląda na to, że GPS jest wyłączony. Pięknie prosimy o jego włączenie.")
+                .setCancelable(false)
+                .setPositiveButton("Idź do ustawień lokalizacji",
+                        new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id){
+                                Intent callGPSSettingIntent = new Intent(
+                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(callGPSSettingIntent);
+                            }
+                        });
+        alertDialogBuilder.setNegativeButton("NIE",
+                new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int id){
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
 
     @Override
     public void onLocationChanged(Location arg0)

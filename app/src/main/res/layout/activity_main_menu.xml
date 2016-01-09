@@ -7,7 +7,7 @@
     android:weightSum="1"
     android:id="@+id/layout">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="147dp"
         android:id="@+id/editText2"

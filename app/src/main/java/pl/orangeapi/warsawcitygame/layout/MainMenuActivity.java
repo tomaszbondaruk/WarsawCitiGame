@@ -32,13 +32,6 @@ public class MainMenuActivity extends AppCompatActivity {
         addListenersToButtons();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        // put your code here...
-
-    }
-
 
     private void addListenersToButtons(){
 
@@ -57,17 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                 });
             }
-            else if(childView.getId() != R.id.button_quit){
-                childView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        Intent intent = new Intent(context, UndevelopedActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                    }
-                });
-            }
-            else{
+            else if(childView.getId() == R.id.button_quit){
                 childView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
@@ -76,7 +59,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                 });
             }
-
         };
 
 
