@@ -110,6 +110,19 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 time.setText("Czas: ");
                 objects.setText("Zdobyte obiekty: ");
 
+                Button fb = (Button) promptsView.findViewById(R.id.face);
+                fb.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, "Własnie skonczylem zajebista gre! #WarszawskaGraMiejskaRulezzz");
+                        startActivity(Intent.createChooser(intent, "Share with"));
+
+                    }
+                });
+
                 userInput.setOnClickListener(new View.OnClickListener() {
 
                     @Override

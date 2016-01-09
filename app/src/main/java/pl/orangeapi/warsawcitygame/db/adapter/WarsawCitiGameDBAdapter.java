@@ -446,8 +446,8 @@ public class WarsawCitiGameDBAdapter {
     }
 
     public GameObjectList<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
-        final double degToMSzer = 111.30;
-        final double degToMDlug = 68.14;
+        final double degToMSzer = 68.14;
+        final double degToMDlug = 111.30;
         Double radiusInDegreeLat = radius / degToMSzer;
         Double radiusInDegreeLng = radius / degToMDlug;
         GameObjectList<GameObject> lgo = new GameObjectList<>();
