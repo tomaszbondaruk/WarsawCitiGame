@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.db.pojo.Property;
@@ -391,7 +392,7 @@ public class WarsawCitiGameDBAdapter {
             return false;
     }
 
-    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException {
+    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
         Double degreeToKm =111.19;
         Double radiusInDegree = radius / degreeToKm;
         List<GameObject> lgo = new ArrayList<>();
@@ -411,6 +412,8 @@ public class WarsawCitiGameDBAdapter {
                         lgo.add(tree);
                     } while (cursor.moveToNext());
                 }
+                if(lgo.size() != objectCount)
+                    throw new NotEnoughObjectsInAreaException("Not enough objects");
 
                 return lgo;
             case "Krzewy" :
@@ -428,6 +431,8 @@ public class WarsawCitiGameDBAdapter {
                         lgo.add(shrub);
                     } while (cursorShrub.moveToNext());
                 }
+                if(lgo.size() != objectCount)
+                    throw new NotEnoughObjectsInAreaException("Not enough objects");
                 return lgo;
             default:
                 return lgo;
