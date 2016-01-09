@@ -45,10 +45,8 @@ public class CitiGameActivity extends AppCompatActivity {
         //
         //getApplicationContext().deleteDatabase("warsawcitigame.db");
 
-
-        //STWORZENIE ADAPTERA DO BAZY DANYCH
-        //dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
-        //dbAdapter.open();
+        dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
+        dbAdapter.open();
 
         //
         //WERSJA Z PROGRESS BAR'em. BARDZO DLUGO SIE WCZYTUJE
@@ -56,17 +54,16 @@ public class CitiGameActivity extends AppCompatActivity {
         //DbPopulateAsyncTask<Void, Void, Void> updateTask = new DbPopulateAsyncTask<Void, Void, Void>(CitiGameActivity.this,dbAdapter);
         //updateTask.execute();
 
-        // DLA PIERWSZEGO URUCHOMIENIA BEDZIE DOSC DLUGO TRWALO, NARAZIE ZAKOMENTOWALEM ZOSTAWIAJAC ORYGINALNA KLASE
-        //if (!dbAdapter.isAlreadyPopulated()) {
-        //    WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
-        //    try {
-        //        dbProcessor.populateDatabase();
-        //    } catch (IOException e) {
-        //        e.printStackTrace();
-        //    } catch (JSONException e) {
-        //      e.printStackTrace();
-        //    }
-        //}
+        if (!dbAdapter.isAlreadyPopulated()) {
+            WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
+            try {
+                dbProcessor.populateDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+        }
 
         // PRZYKLAD WYWOLANIA ZAPYTAN KTORE ZWRACAJA LISTY OBIEKTOW. DEFINICJE OBIEKTOW ZNAJDUJA SIE W PAKIECIE pl.orangeapi.warsawcitygame.db.pojo
         //List<Shrub> s = dbAdapter.getAllShrubs();

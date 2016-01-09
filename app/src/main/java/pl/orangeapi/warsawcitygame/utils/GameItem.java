@@ -9,5 +9,6 @@ public enum GameItem {
     BORDERS_3945,
     BORDERS_78,
     TREES,
+    SHRUBS,
     APARTMENTS
 }

@@ -11,7 +11,7 @@ public class GameConfiguration
     implements Serializable{
 
     private int noParticipants;
-    private int gameRadius;
+    private double gameRadius;
     private int maxN, maxS, maxE, maxW;
     private int noElements;
     private List<GameItem> gameItemList;
@@ -31,7 +31,7 @@ public class GameConfiguration
         this.noParticipants = noParticipants;
     }
 
-    public void setGameRadius(int gameRadius) {
+    public void setGameRadius(double gameRadius) {
         this.gameRadius = gameRadius;
     }
 
@@ -59,11 +59,13 @@ public class GameConfiguration
         this.gameItemList = gameItemList;
     }
 
+    public void addToGameItemList (GameItem item) { this.gameItemList.add(item); }
+
     public int getNoParticipants() {
         return noParticipants;
     }
 
-    public int getGameRadius() {
+    public double getGameRadius() {
         return gameRadius;
     }
 
