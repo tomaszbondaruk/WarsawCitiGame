@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
+import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.db.pojo.Property;
 import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Square;
@@ -388,6 +389,38 @@ public class WarsawCitiGameDBAdapter {
             return true;
         else
             return false;
+    }
+
+    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, int radius) throws ClassNotFoundException {
+        Double degreeToKm =111.19;
+        Double radiusInDegree = radius / degreeToKm;
+        List<GameObject> lgo = new ArrayList<>();
+        switch (object){
+            case "Drzewa" :
+                String query  ="SELECT * FROM tree where latitude > "+(lat+radiusInDegree)+" and latitude < "+(lat-radiusInDegree)+ " and longitude > "+(lng+radiusInDegree)+
+                        " longitde < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                Cursor cursor = db.rawQuery(query,null);
+                if (cursor.moveToFirst()) {
+                    do {
+                        try {
+
+
+                        }
+                        catch (Exception e){
+
+                            Log.i("shrub","no i jeblo "+e.toString());
+                        }
+                    } while (cursor.moveToNext());
+                }
+
+                return lgo;
+            case "Krzewy" :
+                return lgo;
+            default:
+                return lgo;
+
+        }
+
     }
 
 

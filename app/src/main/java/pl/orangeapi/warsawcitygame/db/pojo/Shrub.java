@@ -3,11 +3,9 @@ package pl.orangeapi.warsawcitygame.db.pojo;
 /**
  * Created by Grzegorz on 2015-12-30.
  */
-public class Shrub {
+public class Shrub extends  GameObject{
     private int _id;
     private String name;
-    private Double latitude;
-    private Double longitude;
     private String street;
     private String streetNumber;
     private String district;
@@ -35,6 +33,11 @@ public class Shrub {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    @Override
+    public String getDescription() {
+        return "To jest krzew gatunku "+getName() +" - "+getShrubClass();
     }
 
     public String getName() {
