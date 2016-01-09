@@ -3,9 +3,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_screen"
+    android:background="@drawable/warsaw_1"
     android:weightSum="1"
     android:id="@+id/layout">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="147dp"
+        android:id="@+id/editText2"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:text="Warszawska\nGra Miejska"
+        android:textAlignment="center"
+        android:background="@android:color/transparent"
+        android:textColor="#ffffff"
+        android:textSize="35dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="match_parent"

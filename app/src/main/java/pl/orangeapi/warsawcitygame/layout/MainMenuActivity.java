@@ -17,11 +17,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     Button b1, b2, b3, b4;
 
-    Animation animMove, animFade, animFadeAndMove;
-    AnimationSet set;
-
-    Runnable b1anim, b2anim, b3anim, b4anim;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,78 +28,15 @@ public class MainMenuActivity extends AppCompatActivity {
         b4 = (Button) findViewById(R.id.button_quit);
 
         addListenersToButtons();
-
-        animMove = AnimationUtils.loadAnimation(this, R.anim.button_move);
-        animFade = AnimationUtils.loadAnimation(this, R.anim.anim_aplha);
-        animFadeAndMove = AnimationUtils.loadAnimation(this, R.anim.move_and_alpha);
-
-        set = new AnimationSet(true);
-        set.addAnimation(animMove);
-        set.addAnimation(animFade);
-        set.setFillAfter(true);
-
-        set.setAnimationListener(new Animation.AnimationListener() {
-
-            public void onAnimationStart(Animation animation) {
-                // TODO Auto-generated method stub
-
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            public void onAnimationEnd(Animation animation) {
-                b1.setVisibility(View.INVISIBLE);
-
-            }
-        });
-
-        b1.startAnimation(animMove);
-
-        b1anim = new Runnable() {
-            @Override
-            public void run(){
-                b1.startAnimation(set);
-            }
-        };
-
-        b2anim = new Runnable() {
-            @Override
-            public void run(){
-                b2.startAnimation(animMove);
-            }
-        };
-
-        b3anim = new Runnable() {
-            @Override
-            public void run(){
-                b3.startAnimation(animMove);
-            }
-        };
-
-        b4anim = new Runnable() {
-            @Override
-            public void run(){
-                b4.startAnimation(animMove);
-            }
-        };
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        if(hasFocus){
-            /*Handler h = new Handler();
-            h.postDelayed(b1anim, 1000);
-            h = new Handler();
-            h.postDelayed(b2anim, 2000);
-            h = new Handler();
-            h.postDelayed(b3anim, 3000);
-            h = new Handler();
-            h.postDelayed(b4anim, 4000);
-            */
-        }
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
     }
+
 
     private void addListenersToButtons(){
 
