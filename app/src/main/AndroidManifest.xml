@@ -47,7 +47,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service
-            android:name="pl.orangeapi.warsawcitygame.layout.GPSService"
+            android:name="pl.orangeapi.warsawcitygame.utils.GPSService"
             android:enabled="true"
             android:exported="true"></service>
     </application>
