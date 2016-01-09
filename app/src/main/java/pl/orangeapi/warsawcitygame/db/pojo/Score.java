@@ -8,6 +8,15 @@ public class Score {
     protected String time;
     protected String points;
     protected String number;
+    protected String user;
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     public int get_id() {
         return _id;

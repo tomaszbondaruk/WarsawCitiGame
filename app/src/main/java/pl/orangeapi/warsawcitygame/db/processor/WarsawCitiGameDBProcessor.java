@@ -33,9 +33,10 @@ public class WarsawCitiGameDBProcessor {
         this.dbAdapter = dbAdapter;
     }
     public void populateDatabase() throws IOException, JSONException {
+        Toast.makeText(context, "Dane zostały zapisane poprawnie", Toast.LENGTH_LONG).show();
         populateTree();
         populateShrub();
-        Toast.makeText(context, "Dane zostały zapisane poprawnie", Toast.LENGTH_LONG).show();
+
         //populateProperty();
         //populateSquare();
         //populateStreets();
