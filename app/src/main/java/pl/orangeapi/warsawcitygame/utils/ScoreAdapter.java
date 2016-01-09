@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import pl.orangeapi.warsawcitigame.R;
@@ -48,6 +50,7 @@ public class ScoreAdapter extends BaseAdapter implements AdapterView.OnItemClick
             holder.firstLine = (TextView) convertView.findViewById(R.id.firstLine);
             holder.secondLine = (TextView) convertView.findViewById(R.id.secondLine);
             holder.thirdLine = (TextView) convertView.findViewById(R.id.secondLine);
+            holder.number = (TextView) convertView.findViewById(R.id.number);
 
 
             convertView.setTag(holder);
@@ -58,6 +61,7 @@ public class ScoreAdapter extends BaseAdapter implements AdapterView.OnItemClick
         holder.firstLine.setText("Nazwa użytkownika: "+ searchArrayList.get(position).getUser());
         holder.secondLine.setText("Liczba obiektów: "+searchArrayList.get(position).getNumber() +", w czasie: "+searchArrayList.get(position).getTime());
         holder.thirdLine.setText("Punkty: "+ searchArrayList.get(position).getPoints());
+        holder.number.setText(""+(position+1));
 
         return convertView;
     }
@@ -71,5 +75,6 @@ public class ScoreAdapter extends BaseAdapter implements AdapterView.OnItemClick
         TextView firstLine;
         TextView secondLine;
         TextView thirdLine;
+        TextView number;
     }
 }

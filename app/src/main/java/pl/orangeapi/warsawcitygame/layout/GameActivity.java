@@ -105,7 +105,15 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 time.setText("Czas: ");
                 objects.setText("Zdobyte obiekty: ");
 
+                userInput.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View arg0) {
+                        if (userInput.getText().equals("ksywa"))
+                            userInput.setText("");
+
+                    }
+                });
 
 
                 // set dialog message
@@ -123,7 +131,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                             dbAdapter.addScore(score);
                                             Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
                                             startActivity(intent);
-
+                                            overridePendingTransition(0, 0);
                                             //go on here and dismiss dialog
                                         }
                                         else
@@ -136,6 +144,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                     public void onClick(DialogInterface dialog,int id) {
                                         Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
                                         startActivity(intent);
+                                        overridePendingTransition(0, 0);
                                     }
                                 });
 
@@ -253,46 +262,53 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             time.setText("Czas: ");
             objects.setText("Zdobyte obiekty: ");
 
+            userInput.setOnClickListener(new View.OnClickListener() {
 
+                @Override
+                public void onClick(View arg0) {
+                    if (userInput.getText().equals("ksywa"))
+                        userInput.setText("");
 
+                }
+            });
 
-            // set dialog message
-            alertDialogBuilder
-                    .setCancelable(false)
-                    .setPositiveButton("Zapisz wynik",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    if ( ! (userInput.getText().equals(""))) {
-                                        Score score= new Score();
-                                        score.setUser(userInput.getText().toString());
-                                        score.setNumber("" + goList.size());
-                                        score.setPoints("1");
-                                        score.setTime("1");
-                                        dbAdapter.addScore(score);
-                                        Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
-                                        startActivity(intent);
+                    // set dialog message
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("Zapisz wynik",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            if (!(userInput.getText().equals(""))) {
+                                                Score score = new Score();
+                                                score.setUser(userInput.getText().toString());
+                                                score.setNumber("" + goList.size());
+                                                score.setPoints("1");
+                                                score.setTime("1");
+                                                dbAdapter.addScore(score);
+                                                Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                                startActivity(intent);
+                                                overridePendingTransition(0, 0);
+                                                //go on here and dismiss dialog
+                                            } else
+                                                Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę", Toast.LENGTH_LONG).show();
 
-                                        //go on here and dismiss dialog
-                                    }
-                                    else
-                                        Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę",Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                            .setNegativeButton("Zakończ",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                            startActivity(intent);
+                                            overridePendingTransition(0, 0);
+                                        }
+                                    });
 
-                                }
-                            })
-                    .setNegativeButton("Zakończ",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,int id) {
-                                    Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
 
-            // create alert dialog
-            AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
 
-            // show it
-            alertDialog.show();
-
+                }
+            }
         }
-    }
-}

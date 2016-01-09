@@ -201,10 +201,11 @@ public class WarsawCitiGameDBAdapter {
         return scores;
     }
     public void addScore(Score score){
-        SQLiteStatement ps = db.compileStatement("insert into score ("+COLUMN_TIME+", "+COLUMN_POINTS+", "+COLUMN_OBJECT_NUMBER+") values (?,?,?)");
+        SQLiteStatement ps = db.compileStatement("insert into score ("+COLUMN_TIME+", "+COLUMN_POINTS+", "+COLUMN_OBJECT_NUMBER+", "+COLUMN_USER+") values (?,?,?,?)");
         ps.bindString(1, score.getTime());
         ps.bindString(2, score.getPoints());
         ps.bindString(3, score.getNumber());
+        ps.bindString(4, score.getUser());
 
         ps.execute();
     }
@@ -559,9 +560,4 @@ public class WarsawCitiGameDBAdapter {
 
         }
     }
-
-
-
-
-
 }
