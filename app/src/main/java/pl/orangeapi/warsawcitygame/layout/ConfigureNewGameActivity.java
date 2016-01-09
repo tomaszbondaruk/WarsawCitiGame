@@ -82,9 +82,26 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
         treesCheckBox = (CheckBox) findViewById(R.id.checkTrees);
+        treesCheckBox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    treesCheckBox.setTextColor(Color.BLACK);
+                }
+            }
+        });
 
         shrubsCheckBox = (CheckBox) findViewById(R.id.checkShrubs);
+        shrubsCheckBox.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    shrubsCheckBox.setTextColor(Color.BLACK);
+                }
+            }
+        });
         noPlayersInput = (EditText) findViewById(R.id.numberOfPlayersInput);
 
         noElementsInput = (EditText) findViewById(R.id.noElementsInput);
@@ -131,7 +148,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                         if (treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
                             config.setGameObjects("Drzewa-Krzewy");
                         if (!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                            throw new NothingWasCheckedException("Nic nie zostało wybrane chuju złamany!!!!!!");
+                            throw new NothingWasCheckedException("Wybierz kategorię elementów!");
 
                         config.setNoParticipants(1);
                         config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
