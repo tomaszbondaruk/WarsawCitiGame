@@ -25,8 +25,8 @@ import pl.orangeapi.warsawcitygame.db.pojo.Tree;
  * Created by Grzegorz on 2015-12-30.
  */
 public class WarsawCitiGameDBAdapter {
-    public static final int DB_VERSION = 2;
-    public static final String DB_NAME = "warsawcitigame.db";
+    public static final int DB_VERSION = 1;
+    public static final String DB_NAME = "warsawcitigame1.db";
     public static final String DB_TREE_TABLE ="tree";
     public static final String DB_SHRUB_TABLE= "shrub";
     public static final String DB_PROPERTY_TABLE = "property";
@@ -391,30 +391,43 @@ public class WarsawCitiGameDBAdapter {
             return false;
     }
 
-    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, int radius) throws ClassNotFoundException {
+    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException {
         Double degreeToKm =111.19;
         Double radiusInDegree = radius / degreeToKm;
         List<GameObject> lgo = new ArrayList<>();
         switch (object){
-            case "Drzewa" :
+            case "Drzewo" :
                 String query  ="SELECT * FROM tree where latitude > "+(lat+radiusInDegree)+" and latitude < "+(lat-radiusInDegree)+ " and longitude > "+(lng+radiusInDegree)+
-                        " longitde < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                        " and longitude < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
                 Cursor cursor = db.rawQuery(query,null);
                 if (cursor.moveToFirst()) {
                     do {
-                        try {
-
-
-                        }
-                        catch (Exception e){
-
-                            Log.i("shrub","no i jeblo "+e.toString());
-                        }
+                        Tree tree = new Tree();
+                        tree.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
+                        tree.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                        tree.setTreeClass(cursor.getString(cursor.getColumnIndex(COLUMN_CLASS)));
+                        tree.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                        tree.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
+                        lgo.add(tree);
                     } while (cursor.moveToNext());
                 }
 
                 return lgo;
             case "Krzewy" :
+                String queryShrub  ="SELECT * FROM shrub where latitude > "+(lat+radiusInDegree)+" and latitude < "+(lat-radiusInDegree)+ " and longitude > "+(lng+radiusInDegree)+
+                        " and longitude < "+(lng +radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                Cursor cursorShrub = db.rawQuery(queryShrub,null);
+                if (cursorShrub.moveToFirst()) {
+                    do {
+                        Shrub shrub = new Shrub();
+                        shrub.setDistrict(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_DISTRICT)));
+                        shrub.setName(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_NAME)));
+                        shrub.setShrubClass(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_CLASS)));
+                        shrub.setLongitude(cursorShrub.getDouble(cursorShrub.getColumnIndex(COLUMN_LONGITUDE)));
+                        shrub.setLatitude(cursorShrub.getDouble(cursorShrub.getColumnIndex(COLUMN_LATIDUDE)));
+                        lgo.add(shrub);
+                    } while (cursorShrub.moveToNext());
+                }
                 return lgo;
             default:
                 return lgo;

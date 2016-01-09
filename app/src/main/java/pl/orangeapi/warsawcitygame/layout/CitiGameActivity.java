@@ -20,6 +20,7 @@ import java.util.List;
 import pl.orangeapi.warsawcitigame.R;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
+import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.db.pojo.Property;
 import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Square;
@@ -47,8 +48,8 @@ public class CitiGameActivity extends AppCompatActivity {
 
 
         //STWORZENIE ADAPTERA DO BAZY DANYCH
-        //dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
-        //dbAdapter.open();
+        dbAdapter = new WarsawCitiGameDBAdapter(getApplicationContext());
+        dbAdapter.open();
 
         //
         //WERSJA Z PROGRESS BAR'em. BARDZO DLUGO SIE WCZYTUJE
@@ -57,16 +58,16 @@ public class CitiGameActivity extends AppCompatActivity {
         //updateTask.execute();
 
         // DLA PIERWSZEGO URUCHOMIENIA BEDZIE DOSC DLUGO TRWALO, NARAZIE ZAKOMENTOWALEM ZOSTAWIAJAC ORYGINALNA KLASE
-        //if (!dbAdapter.isAlreadyPopulated()) {
-        //    WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
-        //    try {
-        //        dbProcessor.populateDatabase();
-        //    } catch (IOException e) {
-        //        e.printStackTrace();
-        //    } catch (JSONException e) {
-        //      e.printStackTrace();
-        //    }
-        //}
+        if (!dbAdapter.isAlreadyPopulated()) {
+            WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
+            try {
+                dbProcessor.populateDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+        }
 
         // PRZYKLAD WYWOLANIA ZAPYTAN KTORE ZWRACAJA LISTY OBIEKTOW. DEFINICJE OBIEKTOW ZNAJDUJA SIE W PAKIECIE pl.orangeapi.warsawcitygame.db.pojo
         //List<Shrub> s = dbAdapter.getAllShrubs();
@@ -75,6 +76,13 @@ public class CitiGameActivity extends AppCompatActivity {
         //List<Square> sq = dbAdapter.getAllSquares();
         //List<Street> st = dbAdapter.getAllStreets();
         //List<Forest> f = dbAdapter.getAllForests();
+        try {
+            List<GameObject> go = dbAdapter.getStartingPoints("Drzewo",5,52.210252,21.045218,3.0);
+            Toast.makeText(CitiGameActivity.this, "ilosc gameobject: "+ go.size() , Toast.LENGTH_LONG).show();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
         setContentView(R.layout.activity_citi_game);

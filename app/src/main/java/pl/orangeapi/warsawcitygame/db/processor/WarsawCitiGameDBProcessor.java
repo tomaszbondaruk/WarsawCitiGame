@@ -35,10 +35,10 @@ public class WarsawCitiGameDBProcessor {
     public void populateDatabase() throws IOException, JSONException {
         populateTree();
         populateShrub();
-        populateProperty();
-        populateSquare();
-        populateStreets();
-        populateForest();
+        //populateProperty();
+        //populateSquare();
+        //populateStreets();
+        //populateForest();
         // TO DO
     }
 
