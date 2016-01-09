@@ -142,6 +142,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     bundle.putSerializable("gameObjects", gameObjects);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
                 }
                 catch(NotEnoughObjectsInAreaException e){
                     Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + l.getLongitude() + " " + l.getLatitude()

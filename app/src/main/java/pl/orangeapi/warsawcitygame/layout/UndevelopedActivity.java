@@ -23,6 +23,7 @@ public class UndevelopedActivity extends AppCompatActivity {
             public void onClick(View arg0) {
                 Intent intent = new Intent(context, MainMenuActivity.class);
                 startActivity(intent);
+                overridePendingTransition(0,0);
             }
 
         });
