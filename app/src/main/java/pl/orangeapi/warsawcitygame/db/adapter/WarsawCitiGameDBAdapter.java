@@ -465,7 +465,7 @@ public class WarsawCitiGameDBAdapter {
 
                 long seed = System.nanoTime();
                 Collections.shuffle(lgo, new Random(seed));
-                return (GameObjectList<GameObject>) lgo.subList(0,objectCount);
+                return lgo.subList(objectCount);
 
             default:
                 return lgo;

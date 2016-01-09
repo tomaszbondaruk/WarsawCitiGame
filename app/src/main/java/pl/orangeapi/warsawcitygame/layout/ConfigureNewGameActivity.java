@@ -153,8 +153,8 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     treesCheckBox.setTextColor(Color.RED);
                     shrubsCheckBox.setTextColor(Color.RED);
                 }
-                catch (Exception e){
-
+                catch (ClassNotFoundException e){
+                    Log.d("ERROR", e.getLocalizedMessage());
                 }
 
             }

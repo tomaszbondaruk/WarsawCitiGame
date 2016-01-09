@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
     Button btnShowLocation;
     ArrayList<GameObject> goList;
-    private final double TOLLERANCE = 1.79e-5;
+    private final double TOLLERANCE = 0.005;
 
     TextView currentDistance, pointDescription, x, y;
 
@@ -70,11 +70,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         if(l!=null)
         {
             l = lm.getLastKnownLocation(provider);
-            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
-            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            //currentDistance.setText("Dystans do obecnego punku : " + dist*degToM + "m");
+            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
         }
@@ -94,12 +94,12 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             return;
         }
         l = lm.getLastKnownLocation(provider);
-        double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
-        double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
+        double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
+        double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
         double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
 
         if (diff_x > TOLLERANCE || diff_y > TOLLERANCE){
-            //currentDistance.setText("Dystans do obecnego punku : " + degToM*dist + "m");
+            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
         }
         else {
             goToNextPoint();
@@ -124,11 +124,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     private void goToNextPoint(){
         active++;
         if(active<=goList.size()){
-            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude());
-            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude());
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            //currentDistance.setText("Dystans do obecnego punku : " + dist*degToM + "m");
+            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
         }

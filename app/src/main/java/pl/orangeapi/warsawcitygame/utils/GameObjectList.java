@@ -11,5 +11,12 @@ import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
  */
 public class GameObjectList<E> extends ArrayList<E> implements Serializable{
 
+    public GameObjectList<E> subList(int count) {
+        GameObjectList<E> newList = new GameObjectList<E>();
+        for (int i = 0; i < count; i++) {
+            newList.add(this.get(i));
+        }
+        return newList;
     }
+}
 
