@@ -37,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     int active;
 
     Button btnShowLocation;
-    GameObjectList<GameObject> goList;
+    ArrayList<GameObject> goList;
     private final double TOLLERANCE = 1.79e-5;
 
     TextView currentDistance;
@@ -47,7 +47,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        goList = (GameObjectList<GameObject>) getIntent().getExtras().get("gameObjects");
+        currentDistance = (TextView) findViewById(R.id.currentDistance);
+        goList = (ArrayList<GameObject>) getIntent().getExtras().get("gameObjects");
         active=0;
         btnShowLocation = (Button) findViewById(R.id.button_finish_game);
 
@@ -78,10 +79,10 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
 
         if (diff_x > TOLLERANCE || diff_y > TOLLERANCE){
-
+            currentDistance.setText("Dystans to: " + dist);
         }
         else {
-
+            active++;
         }
         Log.d("ERROR", "Zginąłeś");
     }
