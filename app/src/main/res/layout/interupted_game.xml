@@ -11,6 +11,7 @@
         android:layout_height="180dp"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:src="@drawable/end" />
 
     <TextView
@@ -18,6 +19,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nie poddawaj się!"
+        android:gravity="center"
         android:id="@+id/textView9" />
 
     <TextView
@@ -25,6 +27,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc punktow"
+        android:gravity="center"
         android:id="@+id/points1" />
 
     <TextView
@@ -32,6 +35,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="czas"
+        android:gravity="center"
         android:id="@+id/time1" />
 
     <TextView
@@ -39,10 +43,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc obiektow"
+        android:gravity="center"
         android:id="@+id/objects1" />
 
     <TextView
         android:layout_width="wrap_content"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView10" />
@@ -50,6 +56,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Jeśli chcesz zapisać wyniki w tym momencie wprowadź ksywkę"
         android:id="@+id/textView11" />

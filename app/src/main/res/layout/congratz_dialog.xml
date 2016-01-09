@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
         android:text="Gratulacje ! Udało Ci się ukończyć grę. Twoje wyniki to:"
         android:id="@+id/textView9" />
 
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc punktow"
+        android:gravity="center"
         android:id="@+id/points" />
 
     <TextView
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="czas"
+        android:gravity="center"
         android:id="@+id/time" />
 
     <TextView
@@ -39,11 +42,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc obiektow"
+        android:gravity="center"
         android:id="@+id/objects" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView10" />
 
@@ -51,6 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
         android:text="Podaj swoją ksywę aby zapisać wynik, lub zacznij zabawę od nowa."
         android:id="@+id/textView11" />
 
@@ -59,5 +65,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/nameEditText"
         android:text="ksywa" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Podziel się na Facebook&apos;u"
+        android:id="@+id/face" />
 
 </LinearLayout>
