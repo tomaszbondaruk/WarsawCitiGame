@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,10 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
 
+
 import pl.orangeapi.warsawcitigame.R;
+import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
+import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
 import pl.orangeapi.warsawcitygame.utils.GameConfiguration;
 import pl.orangeapi.warsawcitygame.utils.GameItem;
+import pl.orangeapi.warsawcitygame.utils.GameObjectList;
 
 public class ConfigureNewGameActivity extends AppCompatActivity {
 
@@ -31,6 +33,8 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
     private GameConfiguration config;
     private PopupWindow popUp;
     private LinearLayout mainLayout;
+
+    private GameObjectList<GameObject> gameObjects;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,14 +74,30 @@ public class ConfigureNewGameActivity extends AppCompatActivity {
                 config.setNoParticipants(1);
                 config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
                 Log.d("LAYOUT", noElementsInput.getText().toString());
-                config.setGameRadius(10*((float)gameRadius.getProgress()/100));
-                Log.d("LAYOUT", "" + (10*((float)gameRadius.getProgress()/100)));
+                config.setGameRadius(10 * ((float) gameRadius.getProgress() / 100));
+                Log.d("LAYOUT", "" + (10 * ((float) gameRadius.getProgress() / 100)));
+                try {
+                    gameObjects = dbAdapter.getStartingPoints("Drzewo", config.getNoElements(), 52.210252, 21.045218, config.getGameRadius());
+                    for(int i=0;i<5;i++)
+                        Log.d("LAYOUT", gameObjects.get(i).getDescription());
+                }
+                catch(NotEnoughObjectsInAreaException e){
 
-                Intent intent = new Intent(context, GameActivity.class);
-                intent.putExtra("gameConfiguration", config);
+                }
+                catch (Exception e){
+
+                }
+                Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("gameObjects", gameObjects);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
+    }
+
+    private void getGameConfiguration(){
+
     }
 
 }

@@ -21,6 +21,7 @@ import pl.orangeapi.warsawcitygame.db.pojo.Shrub;
 import pl.orangeapi.warsawcitygame.db.pojo.Square;
 import pl.orangeapi.warsawcitygame.db.pojo.Street;
 import pl.orangeapi.warsawcitygame.db.pojo.Tree;
+import pl.orangeapi.warsawcitygame.utils.GameObjectList;
 
 /**
  * Created by Grzegorz on 2015-12-30.
@@ -392,10 +393,10 @@ public class WarsawCitiGameDBAdapter {
             return false;
     }
 
-    public List<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
+    public GameObjectList<GameObject> getStartingPoints(String object, int objectCount, Double lat, Double lng, Double radius) throws ClassNotFoundException, NotEnoughObjectsInAreaException {
         Double degreeToKm =111.19;
         Double radiusInDegree = radius / degreeToKm;
-        List<GameObject> lgo = new ArrayList<>();
+        GameObjectList<GameObject> lgo = new GameObjectList<>();
         switch (object){
             case "Drzewo" :
                 String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+

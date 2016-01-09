@@ -157,6 +157,16 @@
                 android:textAlignment="center"
                 android:selectAllOnFocus="false" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Obecny promień poszukiwań: 0km"
+                android:id="@+id/textView9"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff"
+                android:gravity="center_vertical|center_horizontal" />
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
