@@ -434,6 +434,40 @@ public class WarsawCitiGameDBAdapter {
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
                 return lgo;
+            case "Drzewa-Krzewy":
+                String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
+                        " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                Cursor cursorTreeBoth = db.rawQuery(queryTreeBoth,null);
+                if (cursorTreeBoth.moveToFirst()) {
+                    do {
+                        Tree tree = new Tree();
+                        tree.setDistrict(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_DISTRICT)));
+                        tree.setName(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_NAME)));
+                        tree.setTreeClass(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_CLASS)));
+                        tree.setLongitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LONGITUDE)));
+                        tree.setLatitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LATIDUDE)));
+                        lgo.add(tree);
+                    } while (cursorTreeBoth.moveToNext());
+                }
+                String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
+                        " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
+                Cursor cursorShrubBoth = db.rawQuery(queryShrubBoth,null);
+                if (cursorShrubBoth.moveToFirst()) {
+                    do {
+                        Shrub shrub = new Shrub();
+                        shrub.setDistrict(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_DISTRICT)));
+                        shrub.setName(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_NAME)));
+                        shrub.setShrubClass(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_CLASS)));
+                        shrub.setLongitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LONGITUDE)));
+                        shrub.setLatitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LATIDUDE)));
+                        lgo.add(shrub);
+                    } while (cursorShrubBoth.moveToNext());
+                }
+                if(lgo.size() != objectCount)
+                    throw new NotEnoughObjectsInAreaException("Not enough objects");
+
+                return lgo;
+
             default:
                 return lgo;
 
