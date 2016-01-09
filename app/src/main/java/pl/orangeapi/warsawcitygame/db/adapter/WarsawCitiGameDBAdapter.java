@@ -11,7 +11,9 @@ import android.util.Log;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.db.pojo.Forest;
@@ -401,18 +403,7 @@ public class WarsawCitiGameDBAdapter {
             case "Drzewo" :
                 String query  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
                         " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
-                Cursor cursor = db.rawQuery(query,null);
-                if (cursor.moveToFirst()) {
-                    do {
-                        Tree tree = new Tree();
-                        tree.setDistrict(cursor.getString(cursor.getColumnIndex(COLUMN_DISTRICT)));
-                        tree.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
-                        tree.setTreeClass(cursor.getString(cursor.getColumnIndex(COLUMN_CLASS)));
-                        tree.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
-                        tree.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATIDUDE)));
-                        lgo.add(tree);
-                    } while (cursor.moveToNext());
-                }
+                lgo = getTreeToGame(query,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
 
@@ -420,60 +411,65 @@ public class WarsawCitiGameDBAdapter {
             case "Krzewy" :
                 String queryShrub  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
                         " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
-                Cursor cursorShrub = db.rawQuery(queryShrub,null);
-                if (cursorShrub.moveToFirst()) {
-                    do {
-                        Shrub shrub = new Shrub();
-                        shrub.setDistrict(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_DISTRICT)));
-                        shrub.setName(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_NAME)));
-                        shrub.setShrubClass(cursorShrub.getString(cursorShrub.getColumnIndex(COLUMN_CLASS)));
-                        shrub.setLongitude(cursorShrub.getDouble(cursorShrub.getColumnIndex(COLUMN_LONGITUDE)));
-                        shrub.setLatitude(cursorShrub.getDouble(cursorShrub.getColumnIndex(COLUMN_LATIDUDE)));
-                        lgo.add(shrub);
-                    } while (cursorShrub.moveToNext());
-                }
+                lgo = getShrubToGame(queryShrub,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
                 return lgo;
             case "Drzewa-Krzewy":
                 String queryTreeBoth  ="SELECT * FROM tree where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
                         " and longitude > "+(lng - radiusInDegree)+ " order by RANDOM() limit "+objectCount;
-                Cursor cursorTreeBoth = db.rawQuery(queryTreeBoth,null);
-                if (cursorTreeBoth.moveToFirst()) {
-                    do {
-                        Tree tree = new Tree();
-                        tree.setDistrict(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_DISTRICT)));
-                        tree.setName(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_NAME)));
-                        tree.setTreeClass(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_CLASS)));
-                        tree.setLongitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LONGITUDE)));
-                        tree.setLatitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LATIDUDE)));
-                        lgo.add(tree);
-                    } while (cursorTreeBoth.moveToNext());
-                }
+                lgo=getTreeToGame(queryTreeBoth,lgo);
                 String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegree)+" and latitude > "+(lat-radiusInDegree)+ " and longitude < "+(lng+radiusInDegree)+
                         " and longitude > "+(lng -radiusInDegree)+ " order by RANDOM() limit "+objectCount;
-                Cursor cursorShrubBoth = db.rawQuery(queryShrubBoth,null);
-                if (cursorShrubBoth.moveToFirst()) {
-                    do {
-                        Shrub shrub = new Shrub();
-                        shrub.setDistrict(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_DISTRICT)));
-                        shrub.setName(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_NAME)));
-                        shrub.setShrubClass(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_CLASS)));
-                        shrub.setLongitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LONGITUDE)));
-                        shrub.setLatitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LATIDUDE)));
-                        lgo.add(shrub);
-                    } while (cursorShrubBoth.moveToNext());
-                }
+                lgo=getShrubToGame(queryShrubBoth,lgo);
                 if(lgo.size() != objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
 
-                return lgo;
+                long seed = System.nanoTime();
+                Collections.shuffle(lgo, new Random(seed));
+                return (GameObjectList<GameObject>) lgo.subList(0,objectCount);
 
             default:
                 return lgo;
 
         }
 
+
+
+    }
+    public GameObjectList<GameObject> getTreeToGame(String q, GameObjectList<GameObject> go){
+        GameObjectList<GameObject> gol = go;
+
+        Cursor cursorTreeBoth = db.rawQuery(q,null);
+        if (cursorTreeBoth.moveToFirst()) {
+            do {
+                Tree tree = new Tree();
+                tree.setDistrict(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_DISTRICT)));
+                tree.setName(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_NAME)));
+                tree.setTreeClass(cursorTreeBoth.getString(cursorTreeBoth.getColumnIndex(COLUMN_CLASS)));
+                tree.setLongitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LONGITUDE)));
+                tree.setLatitude(cursorTreeBoth.getDouble(cursorTreeBoth.getColumnIndex(COLUMN_LATIDUDE)));
+                gol.add(tree);
+            } while (cursorTreeBoth.moveToNext());
+        }
+        return go;
+    }
+
+    public GameObjectList<GameObject> getShrubToGame(String q, GameObjectList<GameObject> go){
+        GameObjectList<GameObject> gol = go;
+        Cursor cursorShrubBoth = db.rawQuery(q,null);
+        if (cursorShrubBoth.moveToFirst()) {
+            do {
+                Shrub shrub = new Shrub();
+                shrub.setDistrict(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_DISTRICT)));
+                shrub.setName(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_NAME)));
+                shrub.setShrubClass(cursorShrubBoth.getString(cursorShrubBoth.getColumnIndex(COLUMN_CLASS)));
+                shrub.setLongitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LONGITUDE)));
+                shrub.setLatitude(cursorShrubBoth.getDouble(cursorShrubBoth.getColumnIndex(COLUMN_LATIDUDE)));
+                gol.add(shrub);
+            } while (cursorShrubBoth.moveToNext());
+        }
+        return gol;
     }
 
 

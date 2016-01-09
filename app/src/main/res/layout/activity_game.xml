@@ -17,19 +17,16 @@
         android:textColor="#ffffff"
         android:textAlignment="center" />
 
-    <Space
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Twoja odległość to: XXX m. ZAPIERDALAJ!!!!!!"
+        android:id="@+id/currentDistance"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.27" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/map"
-        android:maxHeight="100dp"
-        android:nestedScrollingEnabled="false" />
+        android:layout_weight="0.10"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#ffffff" />
 
     <Space
         android:layout_width="match_parent"
