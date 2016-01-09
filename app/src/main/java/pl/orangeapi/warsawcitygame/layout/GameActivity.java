@@ -81,6 +81,72 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         active=0;
 
         btnShowLocation = (Button) findViewById(R.id.button_finish_game);
+        btnShowLocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                LayoutInflater li = LayoutInflater.from(GameActivity.this);
+                View promptsView = li.inflate(R.layout.interupted_game, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        GameActivity.this);
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView
+                        .findViewById(R.id.nameEditText);
+
+                // set textview score
+                TextView score = (TextView) findViewById(R.id.points);
+                TextView time = (TextView) findViewById(R.id.time);
+                TextView objects = (TextView) findViewById(R.id.objects);
+                score.setText("Punkty: ");
+                time.setText("Czas: ");
+                objects.setText("Zdobyte obiekty: ");
+
+
+
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("Zapisz wynik",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        if ( ! (userInput.getText().equals(""))) {
+                                            Score score= new Score();
+                                            score.setUser(userInput.getText().toString());
+                                            score.setNumber("" + goList.size());
+                                            score.setPoints("1");
+                                            score.setTime("1");
+                                            dbAdapter.addScore(score);
+                                            Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
+                                            startActivity(intent);
+
+                                            //go on here and dismiss dialog
+                                        }
+                                        else
+                                            Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę",Toast.LENGTH_LONG).show();
+
+                                    }
+                                })
+                        .setNegativeButton("Zakończ",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+
+
+            }});
 
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         Criteria c = new Criteria();
@@ -178,6 +244,17 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
             final EditText userInput = (EditText) promptsView
                     .findViewById(R.id.nameEditText);
+
+            // set textview score
+            TextView score = (TextView) findViewById(R.id.points);
+            TextView time = (TextView) findViewById(R.id.time);
+            TextView objects = (TextView) findViewById(R.id.objects);
+            score.setText("Punkty: ");
+            time.setText("Czas: ");
+            objects.setText("Zdobyte obiekty: ");
+
+
+
 
             // set dialog message
             alertDialogBuilder
