@@ -70,7 +70,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Podziel się na Facebook&apos;u"
+        android:text="Podziel się wynikiem"
         android:id="@+id/face1" />
 
 </LinearLayout>
