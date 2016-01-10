@@ -58,6 +58,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     EditText x, y;
 
     private final double degToM = 111.196672;
+    boolean working;
 
 
     GameProgressAdapter lvadapter;
@@ -66,6 +67,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        working = true;
         dbAdapter = new WarsawCitiGameDBAdapter(GameActivity.this);
         dbAdapter.open();
 
@@ -75,8 +77,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         currentDistance = (TextView) findViewById(R.id.currentDistance);
         pointDescription = (TextView) findViewById(R.id.pointDescription);
         lv = (ListView) findViewById(R.id.listView);
-        x = (EditText) findViewById(R.id.x);
-        y = (EditText) findViewById(R.id.y);
+        //x = (EditText) findViewById(R.id.x);
+        //y = (EditText) findViewById(R.id.y);
 
         gameProgress = new ArrayList<>();
         lvadapter = new GameProgressAdapter(GameActivity.this, gameProgress);
@@ -106,9 +108,15 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 TextView score = (TextView) promptsView.findViewById(R.id.points1);
                 TextView time = (TextView) promptsView.findViewById(R.id.time1);
                 TextView objects = (TextView) promptsView.findViewById(R.id.objects1);
-                score.setText("Punkty: ");
-                time.setText("Czas: ");
-                objects.setText("Zdobyte obiekty: ");
+
+                Date temp = new Date();
+                long diff = (temp.getTime() - startGame.getTime())/1000;
+                long minutes = diff/60;
+                long seconds = diff-minutes*60;
+
+                score.setText("Punkty: "+(gameProgress.size()*20));
+                time.setText("Czas: "+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+                objects.setText("Zdobyte obiekty: "+gameProgress.size());
 
                 Button fb = (Button) promptsView.findViewById(R.id.face1);
                 fb.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +149,16 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         if ( ! (userInput.getText().equals(""))) {
+                                            Date temp = new Date();
+                                            long diff = (temp.getTime() - startPoint.getTime())/1000;
+                                            long minutes = diff/60;
+                                            long seconds = diff-minutes*60;
+
                                             Score score= new Score();
                                             score.setUser(userInput.getText().toString());
-                                            score.setNumber("" + goList.size());
-                                            score.setPoints("1");
-                                            score.setTime("1");
+                                            score.setNumber("" +gameProgress.size());
+                                            score.setPoints(""+(gameProgress.size()*20));
+                                            score.setTime(""+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
                                             dbAdapter.addScore(score);
                                             Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
                                             finish();
@@ -207,6 +220,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onLocationChanged(Location arg0)
     {
+        if (!working)
+            return;
+
         Log.d("TEST", "LocationChanged");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -265,12 +281,13 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 gameSingleProgress.setType("Krzew");
             }
             gameSingleProgress.setName(goList.get(active - 1).getDescription());
-            gameSingleProgress.setTime("" + String.format("%02d", minutes)+":"+String.format("%02d", seconds));
+            gameSingleProgress.setTime("" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
             gameProgress.add(gameSingleProgress);
             lvadapter.notifyDataSetChanged();
-            lv.setSelection(active-1);
+            lv.setSelection(active - 1);
         }
         else{
+            working = false;
             LayoutInflater li = LayoutInflater.from(GameActivity.this);
             View promptsView = li.inflate(R.layout.congratz_dialog, null);
 
@@ -287,9 +304,15 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             TextView score = (TextView) promptsView.findViewById(R.id.points);
             TextView time = (TextView) promptsView.findViewById(R.id.time);
             TextView objects = (TextView) promptsView.findViewById(R.id.objects);
-            score.setText("Punkty: ");
-            time.setText("Czas: ");
-            objects.setText("Zdobyte obiekty: ");
+
+            Date temp = new Date();
+            long diff = (temp.getTime() - startPoint.getTime())/1000;
+            long minutes = diff/60;
+            long seconds = diff-minutes*60;
+
+            score.setText("Punkty: "+(gameProgress.size()*20+200));
+            time.setText("Czas: "+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
+            objects.setText("Zdobyte obiekty: "+gameProgress.size());
             Button fb = (Button) promptsView.findViewById(R.id.face);
             fb.setOnClickListener(new View.OnClickListener() {
 
@@ -320,11 +343,16 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             if (!(userInput.getText().equals(""))) {
+                                                Date temp = new Date();
+                                                long diff = (temp.getTime() - startPoint.getTime())/1000;
+                                                long minutes = diff/60;
+                                                long seconds = diff-minutes*60;
+
                                                 Score score = new Score();
                                                 score.setUser(userInput.getText().toString());
-                                                score.setNumber("" + goList.size());
-                                                score.setPoints("1");
-                                                score.setTime("1");
+                                                score.setNumber("" + gameProgress.size());
+                                                score.setPoints(""+(gameProgress.size()*20+200));
+                                                score.setTime(""+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
                                                 dbAdapter.addScore(score);
                                                 Intent intent = new Intent(GameActivity.this, ScoreActivity.class);
                                                 finish();
