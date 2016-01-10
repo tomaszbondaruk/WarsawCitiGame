@@ -57,8 +57,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     TextView currentDistance, pointDescription;
     EditText x, y;
 
-    private final double degToMSzer = 111.30;
-    private final double degToMDlug = 68.14;
+    private final double degToM = 111.196672;
+
 
     GameProgressAdapter lvadapter;
     @Override
@@ -175,11 +175,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         if(l!=null)
         {
             l = lm.getLastKnownLocation(provider);
-            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
-            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToM*Math.abs(Math.cos(l.getLatitude()));
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToM;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
+            currentDistance.setText(getDistance(dist));
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
         }
@@ -199,12 +199,14 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             return;
         }
         l = lm.getLastKnownLocation(provider);
-        double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
-        double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
+        double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToM*Math.abs(Math.cos(l.getLatitude()));
+        double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToM;
         double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
 
+        x.setText("" + diff_x);
+        y.setText("" + diff_y);
         if (diff_x > TOLLERANCE || diff_y > TOLLERANCE){
-            currentDistance.setText("Dystans do obecnego punku : " + dist + "km");
+            currentDistance.setText(getDistance(dist));
         }
         else {
             goToNextPoint();
@@ -229,13 +231,14 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
     private void goToNextPoint(){
         active++;
         if(active<goList.size()){
-            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToMDlug;
-            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToMSzer;
+            double diff_x = Math.abs(l.getLongitude() - goList.get(active).getLongitude())*degToM*Math.abs(Math.cos(l.getLatitude()));
+            double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToM;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            currentDistance.setText("Dystans do obecnego punku : " + String.format("%0.2f", dist) + "km");
-            x.setText("" + goList.get(active).getLongitude());
-            y.setText("" + goList.get(active).getLatitude());
+            currentDistance.setText(getDistance(dist));
+
+            //x.setText("" + goList.get(active).getLongitude());
+            //y.setText("" + goList.get(active).getLatitude());
             Date temp = new Date();
             long diff = (temp.getTime() - startPoint.getTime())/1000;
             long minutes = diff/60;
@@ -325,4 +328,10 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
                 }
             }
-        }
+    String getDistance(double dist) {
+        if (dist > 1)
+            return "Dystans do obecnego punku: " + String.format("%1$,.2f", dist) + "km";
+        else
+            return "Dystans do obecnego punku: " + String.format("%1$,.0f", dist* 1000) + "m";
+    }
+}
