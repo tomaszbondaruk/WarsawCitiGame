@@ -15,18 +15,17 @@
         android:src="@drawable/congrats" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
         android:text="Gratulacje ! Udało Ci się ukończyć grę. Twoje wyniki to:"
         android:id="@+id/textView9"
-        android:layout_weight="0.51"
         android:typeface="monospace"
         android:textSize="17dp" />
 
     <TextView
-        android:layout_width="359dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc punktow"
@@ -35,7 +34,7 @@
         android:typeface="monospace" />
 
     <TextView
-        android:layout_width="353dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="czas"
@@ -44,7 +43,7 @@
         android:typeface="monospace" />
 
     <TextView
-        android:layout_width="354dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc obiektow"
@@ -61,7 +60,7 @@
         android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
@@ -73,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nameEditText"
-        android:text="ksywa"
+        android:text="Twoja ksywa"
         android:typeface="monospace"
         android:gravity="center_vertical|center_horizontal" />
 

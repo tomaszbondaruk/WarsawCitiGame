@@ -265,6 +265,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             gameSingleProgress.setTime("" + String.format("%02d", minutes)+":"+String.format("%02d", seconds));
             gameProgress.add(gameSingleProgress);
             lvadapter.notifyDataSetChanged();
+            lv.setSelection(active-1);
         }
         else{
             LayoutInflater li = LayoutInflater.from(GameActivity.this);
