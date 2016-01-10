@@ -29,6 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
         b3 = (Button) findViewById(R.id.button_statistics);
         b4 = (Button) findViewById(R.id.button_quit);
 
+
         addListenersToButtons();
     }
 
@@ -56,6 +57,18 @@ public class MainMenuActivity extends AppCompatActivity {
                     public void onClick(View arg0) {
                         finish();
                         System.exit(0);
+                    }
+                });
+            }
+            else if (childView.getId() == R.id.button_statistics){
+                childView.setOnClickListener(new View.OnClickListener(){
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainMenuActivity.this, ScoreActivity.class);
+                        finish();
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
                     }
                 });
             }
