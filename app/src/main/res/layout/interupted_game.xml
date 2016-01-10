@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:weightSum="1">
 
     <ImageView
         android:layout_width="134dp"
@@ -15,43 +16,49 @@
         android:src="@drawable/end" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="351dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Nie poddawaj się!"
         android:gravity="center"
-        android:id="@+id/textView9" />
+        android:id="@+id/textView9"
+        android:layout_weight="0.23"
+        android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc punktow"
         android:gravity="center"
-        android:id="@+id/points1" />
+        android:id="@+id/points1"
+        android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="358dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="czas"
         android:gravity="center"
-        android:id="@+id/time1" />
+        android:id="@+id/time1"
+        android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="357dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc obiektow"
         android:gravity="center"
-        android:id="@+id/objects1" />
+        android:id="@+id/objects1"
+        android:typeface="monospace" />
 
     <TextView
         android:layout_width="wrap_content"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView10" />
+        android:id="@+id/textView10"
+        android:typeface="monospace" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,18 +66,27 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Jeśli chcesz zapisać wyniki w tym momencie wprowadź ksywkę"
-        android:id="@+id/textView11" />
+        android:id="@+id/textView11"
+        android:typeface="monospace"
+        android:layout_weight="0.60" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nameEditText"
-        android:text="ksywa" />
+        android:text="Twoja ksywa"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Podziel się wynikiem"
-        android:id="@+id/face1" />
+        android:id="@+id/face1"
+        android:background="#a6dfd9d9"
+        android:typeface="normal"
+        android:textColor="#000000"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

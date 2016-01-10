@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+    android:weightSum="1">
 
     <ImageView
         android:layout_width="134dp"
@@ -19,38 +20,45 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
         android:text="Gratulacje ! Udało Ci się ukończyć grę. Twoje wyniki to:"
-        android:id="@+id/textView9" />
+        android:id="@+id/textView9"
+        android:layout_weight="0.51"
+        android:typeface="monospace"
+        android:textSize="17dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="359dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc punktow"
         android:gravity="center"
-        android:id="@+id/points" />
+        android:id="@+id/points"
+        android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="353dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="czas"
         android:gravity="center"
-        android:id="@+id/time" />
+        android:id="@+id/time"
+        android:typeface="monospace" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="354dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="ilosc obiektow"
         android:gravity="center"
-        android:id="@+id/objects" />
+        android:id="@+id/objects"
+        android:typeface="monospace" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView10" />
+        android:id="@+id/textView10"
+        android:typeface="monospace" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -58,18 +66,26 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:gravity="center"
         android:text="Podaj swoją ksywę aby zapisać wynik, lub zacznij zabawę od nowa."
-        android:id="@+id/textView11" />
+        android:id="@+id/textView11"
+        android:typeface="monospace" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nameEditText"
-        android:text="ksywa" />
+        android:text="ksywa"
+        android:typeface="monospace"
+        android:gravity="center_vertical|center_horizontal" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Podziel się wynikiem"
-        android:id="@+id/face" />
+        android:id="@+id/face"
+        android:background="#a6dfd9d9"
+        android:typeface="normal"
+        android:textColor="#000000"
+        android:textSize="18dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>

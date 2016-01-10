@@ -28,7 +28,7 @@ public class ScoreActivity extends AppCompatActivity {
         List<Score> score = dbAdapter.getAllScores(null,null);
         ListView lv =(ListView) findViewById(R.id.scoreListView);
         final ScoreAdapter lvadapter = new ScoreAdapter(this, score);
-        Button goBack = (Button) findViewById(R.id.button_back_to_main_menu);
+        Button goBack = (Button) findViewById(R.id.go_back_to_main_menu_button);
         goBack.setOnClickListener(new View.OnClickListener(){
 
             @Override
