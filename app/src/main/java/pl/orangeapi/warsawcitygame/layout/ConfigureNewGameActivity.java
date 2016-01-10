@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -81,6 +82,9 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
+        apartmentsCheckBox = (CheckBox) findViewById(R.id.checkApartments);
+        apartmentsCheckBox.setPaintFlags(apartmentsCheckBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         treesCheckBox = (CheckBox) findViewById(R.id.checkTrees);
         treesCheckBox.setOnClickListener(new View.OnClickListener() {
 
@@ -88,6 +92,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
                     treesCheckBox.setTextColor(Color.BLACK);
+                    shrubsCheckBox.setTextColor(Color.BLACK);
                 }
             }
         });
@@ -98,11 +103,13 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()) {
+                    treesCheckBox.setTextColor(Color.BLACK);
                     shrubsCheckBox.setTextColor(Color.BLACK);
                 }
             }
         });
         noPlayersInput = (EditText) findViewById(R.id.numberOfPlayersInput);
+        noPlayersInput.setPaintFlags(noPlayersInput.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         noElementsInput = (EditText) findViewById(R.id.noElementsInput);
         noElementsInput.setOnClickListener(new View.OnClickListener() {

@@ -110,7 +110,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 time.setText("Czas: ");
                 objects.setText("Zdobyte obiekty: ");
 
-                Button fb = (Button) promptsView.findViewById(R.id.face);
+                Button fb = (Button) promptsView.findViewById(R.id.face1);
                 fb.setOnClickListener(new View.OnClickListener() {
 
                     @Override
