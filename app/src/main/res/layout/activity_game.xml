@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_screen"
+    android:background="@drawable/warsaw_1"
     android:weightSum="1"
     android:id="@+id/layout">
 
@@ -12,23 +12,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/pointDescription"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.37"
+        android:layout_weight="0.75"
         android:text="Description of current point"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textAlignment="center"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="18dp" />
+        android:textSize="20dp"
+        android:typeface="monospace"
+        android:background="#4Dffffff"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textStyle="normal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Twoja odległość to: XXX m. ZAPIERDALAJ!!!!!!"
+        android:text="Dystans do obecnego punku: 5 km"
         android:id="@+id/currentDistance"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.10"
         android:gravity="center_vertical|center_horizontal"
-        android:textColor="#ffffff" />
+        android:textColor="#000000"
+        android:typeface="monospace"
+        android:background="#4Dffffff"
+        android:textSize="18dp" />
 
     <ListView
         android:layout_width="match_parent"
@@ -38,7 +46,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:background="#4Dffffff" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -46,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.14"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:background="#4Dffffff">
 
         <EditText
             android:layout_width="wrap_content"
@@ -71,5 +81,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Zakończ grę"
-        android:id="@+id/button_finish_game" />
+        android:id="@+id/button_finish_game"
+        android:background="#a6dfd9d9"
+        android:typeface="normal"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:textStyle="bold">
+        <requestFocus />
+    </Button>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -81,11 +82,34 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
         startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
 
+        apartmentsCheckBox = (CheckBox) findViewById(R.id.checkApartments);
+        apartmentsCheckBox.setPaintFlags(apartmentsCheckBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
         treesCheckBox = (CheckBox) findViewById(R.id.checkTrees);
+        treesCheckBox.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    treesCheckBox.setTextColor(Color.BLACK);
+                    shrubsCheckBox.setTextColor(Color.BLACK);
+                }
+            }
+        });
 
         shrubsCheckBox = (CheckBox) findViewById(R.id.checkShrubs);
+        shrubsCheckBox.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    treesCheckBox.setTextColor(Color.BLACK);
+                    shrubsCheckBox.setTextColor(Color.BLACK);
+                }
+            }
+        });
         noPlayersInput = (EditText) findViewById(R.id.numberOfPlayersInput);
+        noPlayersInput.setPaintFlags(noPlayersInput.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         noElementsInput = (EditText) findViewById(R.id.noElementsInput);
         noElementsInput.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +155,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                         if (treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
                             config.setGameObjects("Drzewa-Krzewy");
                         if (!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                            throw new NothingWasCheckedException("Nic nie zostało wybrane chuju złamany!!!!!!");
+                            throw new NothingWasCheckedException("Wybierz kategorię elementów!");
 
                         config.setNoParticipants(1);
                         config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
@@ -153,8 +177,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     }
                 }
                 catch(NotEnoughObjectsInAreaException e){
-                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + l.getLongitude() + " " + l.getLatitude()
-                            ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wymaganej liczby elementów!",Toast.LENGTH_LONG).show();
                 }
                 catch (NothingWasCheckedException e){
                     Toast.makeText(ConfigureNewGameActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();

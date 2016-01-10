@@ -110,6 +110,19 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 time.setText("Czas: ");
                 objects.setText("Zdobyte obiekty: ");
 
+                Button fb = (Button) promptsView.findViewById(R.id.face1);
+                fb.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, "Własnie skonczylem zajebista gre! #WarszawskaGraMiejskaRulezzz");
+                        startActivity(Intent.createChooser(intent, "Share with"));
+
+                    }
+                });
+
                 userInput.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -255,6 +268,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             gameSingleProgress.setTime("" + String.format("%02d", minutes)+":"+String.format("%02d", seconds));
             gameProgress.add(gameSingleProgress);
             lvadapter.notifyDataSetChanged();
+            lv.setSelection(active-1);
         }
         else{
             LayoutInflater li = LayoutInflater.from(GameActivity.this);
@@ -276,6 +290,18 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             score.setText("Punkty: ");
             time.setText("Czas: ");
             objects.setText("Zdobyte obiekty: ");
+            Button fb = (Button) promptsView.findViewById(R.id.face);
+            fb.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Własnie skonczylem zajebista gre! #WarszawskaGraMiejskaRulezzz");
+                    startActivity(Intent.createChooser(intent, "Share with"));
+
+                }
+            });
 
             userInput.setOnClickListener(new View.OnClickListener() {
 

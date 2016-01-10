@@ -475,7 +475,7 @@ public class WarsawCitiGameDBAdapter {
                 String queryShrubBoth  ="SELECT * FROM shrub where latitude < "+(lat+radiusInDegreeLat)+" and latitude > "+(lat-radiusInDegreeLat)+ " and longitude < "+(lng+radiusInDegreeLng)+
                         " and longitude > "+(lng -radiusInDegreeLng)+ " order by RANDOM() limit "+objectCount;
                 lgo=getShrubToGame(queryShrubBoth,lgo);
-                if(lgo.size() != objectCount)
+                if(lgo.size() < objectCount)
                     throw new NotEnoughObjectsInAreaException("Not enough objects");
 
                 long seed = System.nanoTime();
