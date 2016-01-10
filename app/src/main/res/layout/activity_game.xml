@@ -19,7 +19,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:textSize="20dp"
         android:typeface="monospace"
-        android:background="#4Dffffff"
+        android:background="#BFffffff"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:textStyle="normal" />
@@ -35,7 +35,7 @@
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#000000"
         android:typeface="monospace"
-        android:background="#4Dffffff"
+        android:background="#BFffffff"
         android:textSize="18dp" />
 
     <ListView
@@ -47,35 +47,8 @@
         android:paddingRight="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:background="#4Dffffff" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.14"
-        android:weightSum="1"
-        android:background="#4Dffffff">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/x"
-            android:layout_weight="0.34"
-            android:textColor="#ffffff" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/y"
-            android:layout_weight="0.55"
-            android:textColor="#ffffff" />
-    </LinearLayout>
+        android:background="#BFffffff"
+        android:layout_weight="0.15" />
 
     <Button
         android:layout_width="match_parent"
