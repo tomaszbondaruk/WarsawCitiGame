@@ -177,8 +177,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     }
                 }
                 catch(NotEnoughObjectsInAreaException e){
-                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wmaganej liczby elementów" + l.getLongitude() + " " + l.getLatitude()
-                            ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wymaganej liczby elementów!",Toast.LENGTH_LONG).show();
                 }
                 catch (NothingWasCheckedException e){
                     Toast.makeText(ConfigureNewGameActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
