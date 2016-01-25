@@ -74,9 +74,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         startGame = new Date();
         startPoint = new Date();
 
-        currentDistance = (TextView) findViewById(R.id.currentDistance);
-        pointDescription = (TextView) findViewById(R.id.pointDescription);
-        lv = (ListView) findViewById(R.id.listView);
+        currentDistance = (TextView) findViewById(R.id.activityGame_currentDistance);
+        pointDescription = (TextView) findViewById(R.id.activityGame_pointDescription);
+        lv = (ListView) findViewById(R.id.activityGame_checkedPoints_listView);
         //x = (EditText) findViewById(R.id.x);
         //y = (EditText) findViewById(R.id.y);
 
@@ -87,7 +87,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         goList = (ArrayList<GameObject>) getIntent().getExtras().get("gameObjects");
         active=0;
 
-        btnShowLocation = (Button) findViewById(R.id.button_finish_game);
+        btnShowLocation = (Button) findViewById(R.id.activityGame_button_finishGame);
         btnShowLocation.setOnClickListener(new View.OnClickListener() {
 
             @Override

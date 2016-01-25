@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/warsaw_1"
     android:weightSum="1"
-    android:id="@+id/layout">
+    android:id="@+id/activityGame_layout">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/pointDescription"
+        android:id="@+id/activityGame_pointDescription"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.75"
-        android:text="Description of current point"
+        android:text="@string/activityGame_pointDescription_label"
         android:textColor="#000000"
         android:textAlignment="center"
         android:gravity="center_vertical|center_horizontal"
@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Dystans do obecnego punku: 5 km"
-        android:id="@+id/currentDistance"
+        android:text="@string/activityGame_currentDistance_label"
+        android:id="@+id/activityGame_currentDistance"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.10"
         android:gravity="center_vertical|center_horizontal"
@@ -41,7 +41,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="284dp"
-        android:id="@+id/listView"
+        android:id="@+id/activityGame_checkedPoints_listView"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -53,8 +53,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Zakończ grę"
-        android:id="@+id/button_finish_game"
+        android:text="@string/activityGame_button_finishGame_label"
+        android:id="@+id/activityGame_button_finishGame"
         android:background="#a6dfd9d9"
         android:typeface="normal"
         android:textColor="#ffffff"

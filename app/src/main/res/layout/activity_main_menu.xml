@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/warsaw_1"
     android:weightSum="1"
-    android:id="@+id/layout">
+    android:id="@+id/activityMainMenu_layout">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="147dp"
-        android:id="@+id/editText2"
+        android:id="@+id/activityMainMenu_title"
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
-        android:text="Warszawska\nGra Miejska"
+        android:text="@string/activityMainMenu_title_label"
         android:textAlignment="center"
         android:background="@android:color/transparent"
         android:textColor="#ffffff"
@@ -34,8 +34,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stwórz nową grę"
-        android:id="@+id/button_new_game"
+        android:text="@string/activityMainMenu_button_newGame_label"
+        android:id="@+id/activityMainMenu_button_newGame"
         android:visibility="visible"
         android:background="#a6dfd9d9"
         android:textColor="#ffffff"
@@ -45,8 +45,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dołącz do istniejącej gry"
-        android:id="@+id/button_join_current_game"
+        android:text="@string/activityMainMenu_button_joinGame_label"
+        android:id="@+id/activityMainMenu_button_joinGame"
         android:background="#a6dfd9d9"
         android:textColor="#737373"
         android:textSize="18dp"
@@ -55,8 +55,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sprawdź statystyki"
-        android:id="@+id/button_statistics"
+        android:text="@string/activityMainMenu_button_statistics_label"
+        android:id="@+id/activityMainMenu_button_statistics"
         android:background="#a6dfd9d9"
         android:textColor="#ffffff"
         android:textSize="18dp"
@@ -65,8 +65,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wyjdź"
-        android:id="@+id/button_quit"
+        android:text="@string/activityMainMenu_button_quit_label"
+        android:id="@+id/activityMainMenu_button_quit"
         android:background="#a6dfd9d9"
         android:textColor="#ffffff"
         android:textSize="18dp"

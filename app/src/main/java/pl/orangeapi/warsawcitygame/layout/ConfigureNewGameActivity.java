@@ -66,7 +66,9 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
         lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         Criteria c = new Criteria();
         provider = lm.getBestProvider(c, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, ConfigureNewGameActivity.this);
@@ -78,14 +80,14 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
         dbAdapter = new WarsawCitiGameDBAdapter(ConfigureNewGameActivity.this);
         dbAdapter.open();
 
-        currentRadius = (TextView) findViewById(R.id.currentRadius);
+        currentRadius = (TextView) findViewById(R.id.activityConfigureNewGame_currentRadius);
 
-        startNewGameButton = (Button) findViewById(R.id.start_new_game_button);
+        startNewGameButton = (Button) findViewById(R.id.activityConfigureNewGame_button_startNewGame);
 
-        apartmentsCheckBox = (CheckBox) findViewById(R.id.checkApartments);
+        apartmentsCheckBox = (CheckBox) findViewById(R.id.activityConfigureNewGame_checkbox_apartments);
         apartmentsCheckBox.setPaintFlags(apartmentsCheckBox.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        treesCheckBox = (CheckBox) findViewById(R.id.checkTrees);
+        treesCheckBox = (CheckBox) findViewById(R.id.activityConfigureNewGame_checkbox_trees);
         treesCheckBox.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -97,7 +99,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
             }
         });
 
-        shrubsCheckBox = (CheckBox) findViewById(R.id.checkShrubs);
+        shrubsCheckBox = (CheckBox) findViewById(R.id.activityConfigureNewGame_checkbox_shrubs);
         shrubsCheckBox.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -108,18 +110,18 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                 }
             }
         });
-        noPlayersInput = (EditText) findViewById(R.id.numberOfPlayersInput);
+        noPlayersInput = (EditText) findViewById(R.id.activityConfigureNewGame_numberOfPlayers_input);
         noPlayersInput.setPaintFlags(noPlayersInput.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        noElementsInput = (EditText) findViewById(R.id.noElementsInput);
+        noElementsInput = (EditText) findViewById(R.id.activityConfigureNewGame_numberOfElements_input);
         noElementsInput.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
-                noElementsInput.setText("");
+                noElementsInput.setText(R.string.blank);
             }
         });
 
-        gameRadius = (SeekBar) findViewById(R.id.gameRadiusBar);
+        gameRadius = (SeekBar) findViewById(R.id.activityConfigureNewGame_gameRadiusBar);
         gameRadius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override

@@ -1,5 +1,44 @@
 <resources>
-    <string name="app_name">WarsawCitiGame</string>
+    <string name="app_name">GraMiejska</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_score">ScoreActivity</string>
+
+    <!-- Activity CitiGame -->
+    <string name="activityCityGame_title_label">Warszawska Gra Miejska</string>
+    <string name="activityCityGame_startGameButton_label">Rozpocznij zabawę</string>
+
+    <!-- Activity MainMenu -->
+    <string name="activityMainMenu_title_label">Warszawska Gra Miejska</string>
+    <string name="activityMainMenu_button_newGame_label">Stwórz nową grę</string>
+    <string name="activityMainMenu_button_joinGame_label">Dołącz do istniejącej gry</string>
+    <string name="activityMainMenu_button_statistics_label">Sprawdź statystyki</string>
+    <string name="activityMainMenu_button_quit_label">Wyjdź</string>
+
+    <!-- Activity Game -->
+    <string name="activityGame_pointDescription_label">Opis punktu</string>
+    <string name="activityGame_currentDistance_label">Dystans do obecnego punku: %1$s km</string>
+    <string name="activityGame_button_finishGame_label">Zakończ grę</string>
+
+    <!-- Activity ConfigureNewGame -->
+    <string name="activityConfigureNewGame_title_label">Skonfiguruj swoją grę</string>
+    <string name="activityConfigureNewGame_elementCategoryChoice_label">Wybierz kategorie elementow</string>
+    <string name="activityConfigureNewGame_checkbox_trees_label">Drzewa</string>
+    <string name="activityConfigureNewGame_checkbox_shrubs_label">Krzewy</string>
+    <string name="activityConfigureNewGame_checkbox_apartments_label">Lokale</string>
+    <string name="activityConfigureNewGame_numberOfPlayers_label">Liczba graczy</string>
+    <string name="activityConfigureNewGame_numberOfPlayers_input_label">Wprowadź liczbę graczy</string>
+    <string name="activityConfigureNewGame_numberOfElements_label">Liczba elementów</string>
+    <string name="activityConfigureNewGame_numberOfElements_input_label">10</string>
+    <string name="activityConfigureNewGame_searchRadius_label">Wybierz promień poszukiwań</string>
+    <string name="activityConfigureNewGame_currentRadius_label">Obecny promień poszukiwań: %1$s km</string>
+    <string name="activityConfigureNewGame_currentRadius_begin_label">0km</string>
+    <string name="activityConfigureNewGame_currentRadius_middle_label">5km</string>
+    <string name="activityConfigureNewGame_currentRadius_end_label">10km</string>
+    <string name="activityConfigureNewGame_button_startNewGame_label">Rozpocznij grę!</string>
+
+    <!-- Errors -->
+    <string name="error_databaseReload_label">To jest prawdopodobnie pierwsze uruchomienie aplikacji, pobieram dane. Może to trochę potrwać...</string>
+
+    <!-- Utils -->
+    <string name="blank"></string>
 </resources>

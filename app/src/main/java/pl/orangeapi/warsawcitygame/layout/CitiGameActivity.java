@@ -70,7 +70,7 @@ public class CitiGameActivity extends AppCompatActivity {
         if (!dbAdapter.isAlreadyPopulated()) {
             WarsawCitiGameDBProcessor dbProcessor = new WarsawCitiGameDBProcessor(CitiGameActivity.this, dbAdapter);
             try {
-                Toast.makeText(CitiGameActivity.this, "To jest prawdopodobnie pierwsze uruchomienie aplikacji, pobieram dane. Może to trochę potrwać...",Toast.LENGTH_LONG).show();
+                Toast.makeText(CitiGameActivity.this, R.string.error_databaseReload_label,Toast.LENGTH_LONG).show();
                 dbProcessor.populateDatabase();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -85,7 +85,7 @@ public class CitiGameActivity extends AppCompatActivity {
     public void addListenerOnButton(){
 
         final Context context = this;
-        button = (Button) findViewById(R.id.button);
+        button = (Button) findViewById(R.id.activityCityGame_startGameButton);
         button.setOnClickListener(new OnClickListener() {
 
             @Override

@@ -23,12 +23,11 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        b1 = (Button) findViewById(R.id.button_new_game);
-        b2 = (Button) findViewById(R.id.button_join_current_game);
+        b1 = (Button) findViewById(R.id.activityMainMenu_button_newGame);
+        b2 = (Button) findViewById(R.id.activityMainMenu_button_joinGame);
         b2.setPaintFlags(b2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        b3 = (Button) findViewById(R.id.button_statistics);
-        b4 = (Button) findViewById(R.id.button_quit);
-
+        b3 = (Button) findViewById(R.id.activityMainMenu_button_statistics);
+        b4 = (Button) findViewById(R.id.activityMainMenu_button_quit);
 
         addListenersToButtons();
     }
@@ -38,10 +37,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
         final Context context = this;
 
-        ViewGroup parentView = (ViewGroup) findViewById(R.id.layout);
+        ViewGroup parentView = (ViewGroup) findViewById(R.id.activityMainMenu_layout);
         for(int i=0; i < parentView.getChildCount(); i++) {
             View childView = parentView.getChildAt(i);
-            if(childView.getId() == R.id.button_new_game){
+            if(childView.getId() == R.id.activityMainMenu_button_newGame){
                 childView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
@@ -51,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                 });
             }
-            else if(childView.getId() == R.id.button_quit){
+            else if(childView.getId() == R.id.activityMainMenu_button_quit){
                 childView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
@@ -60,7 +59,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
                 });
             }
-            else if (childView.getId() == R.id.button_statistics){
+            else if (childView.getId() == R.id.activityMainMenu_button_statistics){
                 childView.setOnClickListener(new View.OnClickListener(){
 
                     @Override
