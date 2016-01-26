@@ -16,7 +16,7 @@
 
     <!-- Activity Game -->
     <string name="activityGame_pointDescription_label">Opis punktu</string>
-    <string name="activityGame_currentDistance_label">Dystans do obecnego punku: %1$s km</string>
+    <string name="activityGame_currentDistance_label">Dystans do obecnego punku: %1$s</string>
     <string name="activityGame_button_finishGame_label">Zakończ grę</string>
 
     <!-- Activity ConfigureNewGame -->
@@ -38,7 +38,24 @@
 
     <!-- Errors -->
     <string name="error_databaseReload_label">To jest prawdopodobnie pierwsze uruchomienie aplikacji, pobieram dane. Może to trochę potrwać...</string>
+    <string name="error_GPSturnedOff_label">Wygląda na to, że GPS jest wyłączony. Pięknie prosimy o jego włączenie.</string>
+    <string name="error_notEnoughElements_label">Nie znaleziono wymaganej liczby elementów!</string>
+    <string name="error_noGameElementWasChecked_label">Wybierz kategorię elementów!</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_no">Nie</string>
+    <string name="dialog_finish">Zakończ</string>
+    <string name="dialog_goToLocalizationSettings_label">Idź do ustawień lokalizacji</string>
+    <string name="dialog_firstRunOfApplication_label">To jest prawdopodobnie pierwsze uruchomienie aplikacji...</string>
+    <string name="dialog_scoredPoints_label">Zdobyte punkty: %1$s</string>
+    <string name="dialog_elapsedTime_label">Czas: %1$s:%2$s</string>
+    <string name="dialog_foundElements_label">Znalezione obiekty: %1s$</string>
+    <string name="dialog_socialMediaContent_label">Własnie skonczylem zajebista gre!</string>
+    <string name="dialog_saveProgress_label">Zapisz wynik</string>
+    <string name="dialog_insertPlaerName_label">Aby zapisać wynik wprowadź kswkę</string>
 
     <!-- Utils -->
     <string name="blank"></string>
+    <string name="socialMediaHashtag">#WarszawskaGraMiejskaRulezz</string>
+    <string name="playerNamePlaceholder">Ksywa</string>
 </resources>

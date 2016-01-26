@@ -114,9 +114,9 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 long minutes = diff/60;
                 long seconds = diff-minutes*60;
 
-                score.setText("Punkty: "+(gameProgress.size()*20));
-                time.setText("Czas: "+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-                objects.setText("Zdobyte obiekty: "+gameProgress.size());
+                score.setText(getString(R.string.dialog_scoredPoints_label, (gameProgress.size()*20)));
+                time.setText(getString(R.string.dialog_elapsedTime_label,String.format("%02d", minutes),String.format("%02d", seconds)));
+                objects.setText(getString(R.string.dialog_foundElements_label, gameProgress.size()));
 
                 Button fb = (Button) promptsView.findViewById(R.id.face1);
                 fb.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_TEXT, "Własnie skonczylem zajebista gre! #WarszawskaGraMiejskaRulezzz");
+                        intent.putExtra(Intent.EXTRA_TEXT, R.string.dialog_socialMediaContent_label + " " + R.string.socialMediaHashtag);
                         startActivity(Intent.createChooser(intent, "Share with"));
 
                     }
@@ -135,7 +135,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
                     @Override
                     public void onClick(View arg0) {
-                        if (userInput.getText().equals("ksywa"))
+                        if (userInput.getText().equals(R.string.playerNamePlaceholder))
                             userInput.setText("");
 
                     }
@@ -145,7 +145,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
-                        .setPositiveButton("Zapisz wynik",
+                        .setPositiveButton(R.string.dialog_saveProgress_label,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         if ( ! (userInput.getText().equals(""))) {
@@ -167,11 +167,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                             //go on here and dismiss dialog
                                         }
                                         else
-                                            Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(GameActivity.this, R.string.dialog_insertPlaerName_label,Toast.LENGTH_LONG).show();
 
                                     }
                                 })
-                        .setNegativeButton("Zakończ",
+                        .setNegativeButton(R.string.dialog_finish,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
                                         Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
@@ -205,7 +205,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToM;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            currentDistance.setText(getDistance(dist));
+            currentDistance.setText(getString(R.string.activityGame_currentDistance_label, getDistance(dist)));
             x.setText("" + goList.get(active).getLongitude());
             y.setText("" + goList.get(active).getLatitude());
         }
@@ -235,7 +235,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
         x.setText("" + diff_x);
         y.setText("" + diff_y);
         if (diff_x > TOLLERANCE || diff_y > TOLLERANCE){
-            currentDistance.setText(getDistance(dist));
+            currentDistance.setText(getString(R.string.activityGame_currentDistance_label, getDistance(dist)));
         }
         else {
             goToNextPoint();
@@ -264,7 +264,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             double diff_y = Math.abs(l.getLatitude() - goList.get(active).getLatitude())*degToM;
             double dist = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
             pointDescription.setText(goList.get(active).getDescription());
-            currentDistance.setText(getDistance(dist));
+            currentDistance.setText(getString(R.string.activityGame_currentDistance_label, getDistance(dist)));
 
             //x.setText("" + goList.get(active).getLongitude());
             //y.setText("" + goList.get(active).getLatitude());
@@ -310,9 +310,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             long minutes = diff/60;
             long seconds = diff-minutes*60;
 
-            score.setText("Punkty: "+(gameProgress.size()*20+200));
-            time.setText("Czas: "+String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-            objects.setText("Zdobyte obiekty: "+gameProgress.size());
+
+            score.setText(getString(R.string.dialog_scoredPoints_label, (gameProgress.size()*20+200)));
+            time.setText(getString(R.string.dialog_elapsedTime_label,String.format("%02d", minutes),String.format("%02d", seconds)));
+            objects.setText(getString(R.string.dialog_foundElements_label, gameProgress.size()));
+
             Button fb = (Button) promptsView.findViewById(R.id.face);
             fb.setOnClickListener(new View.OnClickListener() {
 
@@ -320,7 +322,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_TEXT, "Własnie skonczylem zajebista gre! #WarszawskaGraMiejskaRulezzz");
+                    intent.putExtra(Intent.EXTRA_TEXT, R.string.dialog_socialMediaContent_label + " " + R.string.socialMediaHashtag);
                     startActivity(Intent.createChooser(intent, "Share with"));
 
                 }
@@ -330,7 +332,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
 
                 @Override
                 public void onClick(View arg0) {
-                    if (userInput.getText().equals("ksywa"))
+                    if (userInput.getText().equals(R.string.playerNamePlaceholder))
                         userInput.setText("");
 
                 }
@@ -339,7 +341,7 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                     // set dialog message
                     alertDialogBuilder
                             .setCancelable(false)
-                            .setPositiveButton("Zapisz wynik",
+                            .setPositiveButton(R.string.dialog_saveProgress_label,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             if (!(userInput.getText().equals(""))) {
@@ -360,11 +362,11 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
                                                 overridePendingTransition(0, 0);
                                                 //go on here and dismiss dialog
                                             } else
-                                                Toast.makeText(GameActivity.this, "Aby zapisać wynik wprowadź kswkę", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(GameActivity.this, R.string.dialog_insertPlaerName_label, Toast.LENGTH_LONG).show();
 
                                         }
                                     })
-                            .setNegativeButton("Zakończ",
+                            .setNegativeButton(R.string.dialog_finish,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
@@ -384,8 +386,8 @@ public class GameActivity extends AppCompatActivity implements LocationListener 
             }
     String getDistance(double dist) {
         if (dist > 1)
-            return "Dystans do obecnego punku: " + String.format("%1$,.2f", dist) + "km";
+            return String.format("%1$,.2f", dist) + "km";
         else
-            return "Dystans do obecnego punku: " + String.format("%1$,.0f", dist* 1000) + "m";
+            return String.format("%1$,.0f", dist* 1000) + "m";
     }
 }

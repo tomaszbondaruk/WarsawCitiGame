@@ -20,8 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +30,10 @@ import pl.orangeapi.warsawcitygame.Exception.NotEnoughObjectsInAreaException;
 import pl.orangeapi.warsawcitygame.Exception.NothingWasCheckedException;
 import pl.orangeapi.warsawcitygame.db.adapter.WarsawCitiGameDBAdapter;
 import pl.orangeapi.warsawcitygame.db.pojo.GameObject;
-import pl.orangeapi.warsawcitygame.utils.GPSService;
 import pl.orangeapi.warsawcitygame.utils.GameConfiguration;
-import pl.orangeapi.warsawcitygame.utils.GameItem;
 import pl.orangeapi.warsawcitygame.utils.GameObjectList;
+import pl.orangeapi.warsawcitygame.utils.enums.ApplicationObjects;
+import pl.orangeapi.warsawcitygame.utils.enums.GameItem;
 
 public class ConfigureNewGameActivity extends AppCompatActivity implements LocationListener {
 
@@ -45,16 +43,12 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
     WarsawCitiGameDBAdapter dbAdapter;
 
-    private GPSService gpsReader;
-
     private Button startNewGameButton;
     private CheckBox treesCheckBox, shrubsCheckBox, apartmentsCheckBox;
     private EditText noPlayersInput, noElementsInput;
     private TextView currentRadius;
     private SeekBar gameRadius;
     private GameConfiguration config;
-    private PopupWindow popUp;
-    private LinearLayout mainLayout;
 
     private GameObjectList<GameObject> gameObjects;
 
@@ -134,7 +128,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
-                currentRadius.setText("Obecny promień poszukiwań: " + (double) Math.round((10*((float)progress/100)) * 100) / 100 + "km");
+                currentRadius.setText(getString(R.string.activityConfigureNewGame_currentRadius_label, ((double) Math.round((10*((float)progress/100)) * 100) / 100)));
             }
         });
 
@@ -151,13 +145,13 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     l = lm.getLastKnownLocation(provider);
                     if(l!=null) {
                         if (treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                            config.setGameObjects("Drzewo");
+                            config.setGameObjects(GameItem.Trees.getText());
                         if (!treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
-                            config.setGameObjects("Krzewy");
+                            config.setGameObjects(GameItem.Shrubs.getText());
                         if (treesCheckBox.isChecked() && shrubsCheckBox.isChecked())
-                            config.setGameObjects("Drzewa-Krzewy");
+                            config.setGameObjects(GameItem.TreesShrubs.getText());
                         if (!treesCheckBox.isChecked() && !shrubsCheckBox.isChecked())
-                            throw new NothingWasCheckedException("Wybierz kategorię elementów!");
+                            throw new NothingWasCheckedException();
 
                         config.setNoParticipants(1);
                         config.setNoElements(Integer.parseInt(noElementsInput.getText().toString()));
@@ -169,7 +163,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
                         Intent intent = new Intent(ConfigureNewGameActivity.this, GameActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("gameObjects", gameObjects);
+                        bundle.putSerializable(ApplicationObjects.GameObject.getText(), gameObjects);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
@@ -179,7 +173,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                     }
                 }
                 catch(NotEnoughObjectsInAreaException e){
-                    Toast.makeText(ConfigureNewGameActivity.this,"Nie znaleziono wymaganej liczby elementów!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConfigureNewGameActivity.this,R.string.error_notEnoughElements_label,Toast.LENGTH_LONG).show();
                 }
                 catch (NothingWasCheckedException e){
                     Toast.makeText(ConfigureNewGameActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
@@ -200,9 +194,9 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
 
     private void showGPSDisabledAlertToUser(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Wygląda na to, że GPS jest wyłączony. Pięknie prosimy o jego włączenie.")
+        alertDialogBuilder.setMessage(R.string.error_GPSturnedOff_label)
                 .setCancelable(false)
-                .setPositiveButton("Idź do ustawień lokalizacji",
+                .setPositiveButton(R.string.dialog_goToLocalizationSettings_label,
                         new DialogInterface.OnClickListener(){
                             public void onClick(DialogInterface dialog, int id){
                                 Intent callGPSSettingIntent = new Intent(
@@ -210,7 +204,7 @@ public class ConfigureNewGameActivity extends AppCompatActivity implements Locat
                                 startActivity(callGPSSettingIntent);
                             }
                         });
-        alertDialogBuilder.setNegativeButton("NIE",
+        alertDialogBuilder.setNegativeButton(R.string.dialog_no,
                 new DialogInterface.OnClickListener(){
                     public void onClick(DialogInterface dialog, int id){
                         dialog.cancel();
